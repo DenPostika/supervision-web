@@ -10,7 +10,9 @@
     "devPort": 6075,
     "studioPort": 6076,
     "buildPort": 6077,
-    "plugins": [],
+    "plugins": [
+      "redux-saga"
+    ],
     "css": "sass"
   },
   "scripts": {
