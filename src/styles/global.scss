@@ -54,3 +54,26 @@ h6 {
 .title{
   text-transform: capitalize;
 }
+.preloader-smile{
+  position: relative;
+  perspective: 50px;
+  &:before{
+    content: '=]';
+    width: 25px;
+    height: 25px;
+    top: -40px;
+    left: calc(50% - 13px);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    animation: smileRotate 666ms infinite linear;
+    border: 2px solid;
+    transform: translate3d(0,0,0);
+    box-shadow: 1px 2px 3px 0 #ff9900 inset;
+  }
+}
+@keyframes smileRotate {
+  0% {transform: rotate(0);}
+  50% {transform: rotate(180deg);}
+  100% {transform: rotate(360deg);}
+}

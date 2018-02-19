@@ -25,7 +25,7 @@ export class SignUp extends Component {
 				</div>
 				<div className="box-content">
 					<h1>{cardId || 'card ID'}</h1>
-					<Button styleClass={`${isPending ? 'preloader-border' : ''}`}>
+					<Button styleClass={`${isPending ? 'preloader-smile' : ''}`}>
 						{isPending ? 'waiting for card' : 'start'}
 					</Button>
 				</div>
