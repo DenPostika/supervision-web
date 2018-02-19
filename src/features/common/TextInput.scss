@@ -1,0 +1,70 @@
+@import '../../styles/mixins';
+
+@mixin input-normalize {
+  display: inline-block;
+  width: 100%;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  text-align: left;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 12px 8px;
+  font-size: 14px;
+  line-height: 1.14;
+  &:focus, &:active {
+    outline: none;
+  }
+}
+
+@mixin input-default {
+  #{$link-parent} {
+    @include input-normalize;
+    color: #464d5d;
+    background-color: #e2e2e4;
+    &:focus, &:active {
+      background: #eee;
+    }
+    &::-webkit-input-placeholder{
+      color: gray;
+    }
+  }
+}
+
+.input_wrap{
+  position: relative;
+  box-sizing: border-box;
+  &.full-width{
+    width: 100%;
+  }
+  .input{
+    @include input-default;
+    &.full-width{
+      width: 100%;
+      max-width: 100%;
+    }
+    &.hasIcon{
+      padding-left: 30px;
+    }
+    &:-webkit-autofill {
+      -webkit-box-shadow: inset 0 0 0px 9999px #E2E2E4;
+    }
+  }
+  .input_icon{
+    position: absolute;
+    left: 10px;
+    top: calc(50% - 10px);
+  }
+  .input:focus + .underline{
+    background-color: #e73a39;
+    animation: underlineInput 300ms linear;
+  }
+  .underline{
+    height: 2px;
+    background-color: transparent;
+  }
+}
+@keyframes underlineInput {
+  0% {width: 2px;}
+  100% {width: 100%;}
+}

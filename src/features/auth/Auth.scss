@@ -1,0 +1,15 @@
+@import '../../styles/mixins';
+
+.auth-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  .authForm_wrap{
+    width: 100%;
+    max-width: 360px;
+    min-width: 300px;
+    height: 280px;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.14);
+  }
+}

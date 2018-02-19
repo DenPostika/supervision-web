@@ -81,5 +81,10 @@
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "rekit-plugin-redux-saga": "^1.0.0"
   }
 }
