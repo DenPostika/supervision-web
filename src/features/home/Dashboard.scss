@@ -1,0 +1,37 @@
+@import '../../styles/mixins';
+
+.home-dashboard {
+  height: 100%;
+  .box-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .list_wrap{
+    display: flex;
+    flex-direction: column;
+    .list_head{
+      border-bottom: 2px solid #999;
+      text-transform: uppercase;
+      color: #888888;
+    }
+    .list_row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      height: 30px;
+      &:nth-child(odd){
+        background: #fff;
+      }
+      & > *{
+        flex: 1 1 25%;
+        text-align: center;
+      }
+    }
+    .week_sum{
+      border-bottom: 2px solid #999;
+      border-top: 2px solid #ddd;
+    }
+  }
+}

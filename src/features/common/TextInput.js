@@ -34,6 +34,8 @@ export default class TextInput extends Component {
 			hasError,
 			errorMsg,
 			onChange,
+			disabled,
+			value,
 		} = this.props;
 		const { isFocused } = this.state;
 		return (
@@ -41,13 +43,16 @@ export default class TextInput extends Component {
 				{label && <label htmlFor={name}>{label}</label>}
 				<input
 					type="text"
-					className={`common-text-input input ${styleClass}`}
+					className={`common-text-input input ${styleClass} ${disabled &&
+						'disabled'}`}
 					name={name}
 					placeholder={placeholder}
 					id={name}
 					onChange={onChange}
 					onFocus={this.triggerUnderline}
 					onBlur={this.triggerUnderline}
+					disabled={disabled}
+					value={value}
 				/>
 				<div
 					className="underline"

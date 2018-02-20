@@ -1,20 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/home/DefaultPage';
+import { Dashboard } from 'src/features/home/Dashboard';
 
-describe('home/DefaultPage', () => {
+describe('home/Dashboard', () => {
   it('renders node with correct class name', () => {
     const pageProps = {
       home: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...pageProps} />
+      <Dashboard {...pageProps} />
     );
 
     expect(
-      renderedComponent.find('.home-default-page').getElement()
+      renderedComponent.find('.home-dashboard').getElement()
     ).to.exist;
   });
 });

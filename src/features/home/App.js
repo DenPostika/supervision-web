@@ -7,19 +7,15 @@ import PropTypes from 'prop-types';
   You should adjust it according to the requirement of your app.
 */
 export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-  };
+	static propTypes = {
+		children: PropTypes.node,
+	};
 
-  static defaultProps = {
-    children: '',
-  };
+	static defaultProps = {
+		children: '',
+	};
 
-  render() {
-    return (
-      <div className="home-app">
-        {this.props.children}
-      </div>
-    );
-  }
+	render() {
+		return <div className="home-app">{this.props.children}</div>;
+	}
 }

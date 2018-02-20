@@ -21,8 +21,8 @@ export class SignIn extends Component {
 					<h2 className="title">authorization</h2>
 				</div>
 				<div className="box-content">
-					<TextInput name="usrn" placeholder="user name" />
-					<TextInput name="pass" placeholder="password" />
+					<TextInput name="username" placeholder="user name" />
+					<TextInput name="password" placeholder="password" />
 					<Button styleClass="login">login</Button>
 				</div>
 				<span className="box-footer">
