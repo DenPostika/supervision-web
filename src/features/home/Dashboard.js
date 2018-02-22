@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Bar } from 'react-chartjs-2';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
@@ -11,8 +12,31 @@ export class Dashboard extends Component {
 		home: PropTypes.object.isRequired,
 		actions: PropTypes.object.isRequired,
 	};
-
+	renderTrackList = arr =>
+		arr.map((item, i) => (
+			<div key={i} className="list_row">
+				<div className="date">11.01.2018</div>
+				<div className="in">9:00</div>
+				<div className="out">18:00</div>
+				<div className="total">8</div>
+			</div>
+		));
 	render() {
+		const arr = Array(5).fill(0);
+		const data = {
+			labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+			datasets: [
+				{
+					label: 'hours',
+					backgroundColor: '#607D9A',
+					borderColor: '#6495C7',
+					borderWidth: 1,
+					hoverBackgroundColor: '#3b6c9d91',
+					hoverBorderColor: '#315A8C',
+					data: [0, 8, 8, 8, 8, 8, 0],
+				},
+			],
+		};
 		return (
 			<div className="home-dashboard">
 				<div className="container">
@@ -21,7 +45,35 @@ export class Dashboard extends Component {
 						<Button>Sign out</Button>
 					</header>
 					<main className="box-content">
-						<div className="chart_wrap box no-padding">chart</div>
+						<div className="chart_wrap box ">
+							<Bar
+								data={data}
+								width={100}
+								height={50}
+								options={{
+									maintainAspectRatio: false,
+									legend: {
+										display: false,
+									},
+									scales: {
+										xAxes: [
+											{
+												gridLines: {
+													display: false,
+												},
+											},
+										],
+										yAxes: [
+											{
+												gridLines: {
+													display: false,
+												},
+											},
+										],
+									},
+								}}
+							/>
+						</div>
 						<div className="list_wrap box no-padding">
 							<div className="list_head list_row">
 								<div className="date">date</div>
@@ -29,12 +81,7 @@ export class Dashboard extends Component {
 								<div className="out">gone home</div>
 								<div className="total">total hours</div>
 							</div>
-							<div className="list_row">
-								<div className="date">11.01.2018</div>
-								<div className="in">9:00</div>
-								<div className="out">18:00</div>
-								<div className="total">8</div>
-							</div>
+							{this.renderTrackList(arr)}
 							<div className="week_sum list_row">
 								<div className="date">week summary</div>
 								<div className="in" />
@@ -43,7 +90,7 @@ export class Dashboard extends Component {
 							</div>
 						</div>
 					</main>
-					<footer className="box footer">footer</footer>
+					{/* <footer className="box footer">footer</footer> */}
 				</div>
 			</div>
 		);

@@ -2,19 +2,19 @@
 
 .btn {
   border-radius: 10px;
-  border: solid 2px rgba(140, 150, 169, .6);
+  border: solid 2px #8999b7;
   text-transform: uppercase;
   padding: 12px 15px;
   font-size: 10px;
   font-weight: bold;
   letter-spacing: 1.5px;
   text-align: center;
-  color: #8c96a9;
+  color: #bbc9e4;
   transition: all 0.2s ease;
   outline: none;
-  background: #fff;
+  background: transparent;
   &:hover{
     cursor: pointer;
-    border-color: #ff9900;
+    border-color: #ff990091;
   }
 }

@@ -58,7 +58,7 @@ export default class TextInput extends Component {
 					className="underline"
 					style={{
 						backgroundColor: `${
-							isFocused ? '#f90' : 'transparent'
+							isFocused ? 'transparent' : 'transparent'
 						}`,
 					}}
 				/>

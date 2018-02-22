@@ -4,11 +4,18 @@
   box-sizing: border-box;
   font-size: 14px;
   font-family: "Open Sans",sans-serif;
+  color: #f8f8f8;;
 }
 html, body, #react-root {
   height: 100%;
 }
-
+html{
+  background-color: #414e60 20%;
+  background-image: radial-gradient(farthest-side ellipse at 10% 0, #414e60 20%, #94a3b1);
+  background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+  background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+  background-attachment: fixed, fixed;
+}
 body, td {
   color: #555;
   font-family: Arial, "Helvetica Neue",Helvetica,sans-serif;
@@ -65,11 +72,12 @@ h6 {
   }
 }
 .box{
-  background: #f9f9f9;
+  background: rgba(51, 51, 51, 0.425);
   box-shadow: 0 0 3px 0 rgba(0,0,0,.14);
   margin: 10px 5px;
   padding: 15px;
   transition: all 0.2s ease;
+  border-radius: 5px;
   &.no-padding{
     padding: 0;
   }

@@ -83,8 +83,11 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "chart.js": "^2.7.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "react-chartjs-2": "^2.7.0",
+    "redux-saga": "^0.16.0",
     "rekit-plugin-redux-saga": "^1.0.0"
   }
 }

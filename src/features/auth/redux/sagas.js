@@ -1,0 +1,1 @@
+export { watchWaitCard } from './waitCard';
