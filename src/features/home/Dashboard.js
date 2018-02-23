@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 
 import Button from '../common/Button';
@@ -41,8 +42,12 @@ export class Dashboard extends Component {
 			<div className="home-dashboard">
 				<div className="container">
 					<header className="box box-head">
-						<h1 className="title">Dashboard</h1>
-						<Button>Sign out</Button>
+						<h1 className="title" />
+						<Button onlyIcon>
+							<Link to="./auth/sign_in">
+								<i className="fa fa-power-off" />
+							</Link>
+						</Button>
 					</header>
 					<main className="box-content">
 						<div className="chart_wrap box ">
@@ -61,12 +66,18 @@ export class Dashboard extends Component {
 												gridLines: {
 													display: false,
 												},
+												ticks: {
+													fontColor: '#f2f2f295',
+												},
 											},
 										],
 										yAxes: [
 											{
 												gridLines: {
 													display: false,
+												},
+												ticks: {
+													fontColor: '#f2f2f295',
 												},
 											},
 										],

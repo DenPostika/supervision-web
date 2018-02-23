@@ -29,7 +29,7 @@
       & > *{
         flex: 1 1 25%;
         text-align: center;
-        color: #d2d2d2;
+        color: inherit;
       }
     }
     .week_sum{
@@ -37,11 +37,12 @@
       border-top: 2px solid #ddd;
       font-weight: bold;
       letter-spacing: 1.2px;
+      color: #f2f2f2;
     }
     .list_head{
       border-bottom: 2px solid #999;
       text-transform: uppercase;
-      color: #888888;
+      color: #f2f2f2;
       font-weight: bold;
       letter-spacing: 1.2px;
     }

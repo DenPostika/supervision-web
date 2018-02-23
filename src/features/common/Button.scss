@@ -9,10 +9,21 @@
   font-weight: bold;
   letter-spacing: 1.5px;
   text-align: center;
-  color: #bbc9e4;
+  color: #8999b7;
   transition: all 0.2s ease;
   outline: none;
   background: transparent;
+  i{
+    font-size: 2em;
+  }
+  &.onlyIcon{
+    color: #2DB7FA;
+    border: none;
+    padding: 3px;
+    &:hover{
+      color: #ff990091;
+    }
+  }
   &:hover{
     cursor: pointer;
     border-color: #ff990091;

@@ -1,10 +1,8 @@
 @import './mixins';
-
 *{
   box-sizing: border-box;
   font-size: 14px;
   font-family: "Open Sans",sans-serif;
-  color: #f8f8f8;;
 }
 html, body, #react-root {
   height: 100%;
@@ -24,11 +22,13 @@ a {
   color: #2db7f5;
   text-decoration: none;
   &:hover {
-    color: #f90;
+    color: #ff900091;
     border: none;
   }
 }
-
+h1,h2,h3,h4,h5,h6{
+  color: #f2f2f2;
+}
 h1 {
   font-size: 24px;
   font-weight: bold;
@@ -85,6 +85,8 @@ h6 {
 .title{
   text-transform: capitalize;
   display: inline-block;
+  color: #f2f2f2;
+  letter-spacing: 1.1px;
 }
 .preloader-smile{
   position: relative;
