@@ -1,4 +1,6 @@
+import { fork } from 'redux-saga/effects';
 import * as authSagas from '../features/auth/redux/sagas';
+
 // This file is auto maintained by rekit-plugin-redux-saga,
 // you usually don't need to manually edit it.
 
@@ -14,6 +16,7 @@ const sagas = featureSagas
 	.filter(s => typeof s === 'function');
 
 function* rootSaga() {
+	yield fork(authSagas.socketTaskManager);
 	yield sagas.map(saga => saga());
 }
 

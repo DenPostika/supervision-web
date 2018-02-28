@@ -8,6 +8,8 @@
 const initialState = {
   waitCardPending: false,
   waitCardError: null,
+  createNewUserPending: false,
+  createNewUserError: null,
 };
 
 export default initialState;

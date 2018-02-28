@@ -1,14 +1,20 @@
-import { delay, takeEvery, eventChannel } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import axios from 'axios';
+import { eventChannel, takeEvery } from 'redux-saga';
+import io from 'socket.io-client';
+import { call, put, take, fork, race, cancel, all } from 'redux-saga/effects';
 import {
 	AUTH_WAIT_CARD_BEGIN,
 	AUTH_WAIT_CARD_SUCCESS,
 	AUTH_WAIT_CARD_FAILURE,
 	AUTH_WAIT_CARD_DISMISS_ERROR,
+	AUTH_CREATE_NEW_USER_FAILURE,
 } from './constants';
 
+const socketServerURL = 'http://localhost:3000';
+const serverURL = 'http://localhost:4040';
+
 export function waitCard() {
-	// If need to pass args to saga, pass it with the begin action.
+	// yield put({ type: 'WEBSOCKET_START_TASK' });
 	return {
 		type: AUTH_WAIT_CARD_BEGIN,
 	};
@@ -20,27 +26,67 @@ export function dismissWaitCardError() {
 	};
 }
 
+function* externalListener(chanel, task) {
+	while (true) {
+		const action = yield take(chanel);
+		yield put(action);
+		console.log(action);
+	}
+}
+
+function initSocketListener(socket) {
+	return eventChannel(emit => {
+		socket.on('card-id', data => {
+			console.log('data :', data);
+			emit({ type: AUTH_WAIT_CARD_SUCCESS, payload: data });
+		});
+
+		return () => {
+			socket.close();
+		};
+	});
+}
+function* connectSocket() {
+	while (true) {
+		const { payload } = yield take('WEBSOCKET_CONNECT');
+		try {
+			const socket = io(payload.uri);
+			const channel = yield call(initSocketListener, socket);
+			yield race({
+				task: all([call(externalListener, channel, payload.task)]),
+			});
+		} catch (e) {
+			console.warn(e);
+		}
+	}
+}
+
 // worker Saga: will be fired on AUTH_WAIT_CARD_BEGIN actions
-export function* doWaitCard() {
-	// If necessary, use argument to receive the begin action with parameters.
-	let res;
+export function* socketTaskManager() {
+	while (true) {
+		yield take('WEBSOCKET_START_TASK');
+		const task = yield fork(connectSocket);
+		yield put({
+			type: 'WEBSOCKET_CONNECT',
+			payload: { uri: socketServerURL, task },
+		});
+	}
+}
+
+export function* startTask() {
 	try {
-		// Do Ajax call or other async request here. delay(20) is just a placeholder.
-		res = yield call(delay, 20);
+		const res = yield axios.post(`${serverURL}/api/wait-card-id`);
+		if (res.status === 200) {
+			yield put({ type: 'WEBSOCKET_START_TASK' });
+		}
 	} catch (err) {
+		console.log(err);
 		yield put({
 			type: AUTH_WAIT_CARD_FAILURE,
 			data: { error: err },
 		});
-		return;
 	}
-	// Dispatch success action out of try/catch so that render errors are not catched.
-	yield put({
-		type: AUTH_WAIT_CARD_SUCCESS,
-		data: res,
-	});
 }
-
 /*
   Alternatively you may use takeEvery.
 
@@ -49,7 +95,7 @@ export function* doWaitCard() {
   and only the latest one will be run.
 */
 export function* watchWaitCard() {
-	yield takeEvery(AUTH_WAIT_CARD_BEGIN, doWaitCard);
+	yield takeEvery(AUTH_WAIT_CARD_BEGIN, startTask);
 }
 
 // Redux reducer
@@ -67,6 +113,7 @@ export function reducer(state, action) {
 				...state,
 				waitCardPending: false,
 				waitCardError: null,
+				cardId: action.payload,
 			};
 
 		case AUTH_WAIT_CARD_FAILURE:

@@ -19,18 +19,46 @@ export class SignUp extends Component {
 		isPending: false,
 		cardId: null,
 	};
+	onChange = e => {
+		console.log(e.target.value);
+		this.setState({ [e.target.name]: e.target.value });
+	};
 	handleSubmit = () => {};
+	handleCard = e => {
+		e.preventDefault();
+		this.props.actions.waitCard();
+	};
 	renderContent = cardId => {
 		const { isPending } = this.props;
 		const form = (
 			<div className="box-content extra_height">
 				<div className="signUp_form">
-					<TextInput name="username" placeholder="user name" />
-					<TextInput name="password" placeholder="password" />
-					<TextInput name="mobileNumber" placeholder="0XXXXXXXXX" />
+					<TextInput
+						name="username"
+						placeholder="user name"
+						onChange={this.onChange}
+					/>
+					<TextInput
+						name="password"
+						placeholder="password"
+						onChange={this.onChange}
+					/>
+					<TextInput
+						name="mobileNumber"
+						placeholder="0XXXXXXXXX"
+						onChange={this.onChange}
+					/>
 					<TextInput name="cardId" value={cardId} disabled />
-					<TextInput name="slackName" placeholder="slackName" />
-					<TextInput name="email" placeholder="email" />
+					<TextInput
+						name="slackName"
+						placeholder="slackName"
+						onChange={this.onChange}
+					/>
+					<TextInput
+						name="email"
+						placeholder="email"
+						onChange={this.onChange}
+					/>
 					<Button
 						styleClass={`${isPending ? 'preloader-smile' : ''}`}
 						onSubmit={this.handleSubmit}
@@ -45,8 +73,13 @@ export class SignUp extends Component {
 		}
 		return (
 			<div className="box-content">
-				<h1>{cardId || 'card ID'}</h1>
-				<Button styleClass={`${isPending ? 'preloader-smile' : ''}`}>
+				<h1>{cardId || 'CARD ID'}</h1>
+				<Button
+					styleClass={`${isPending ? 'preloader-smile' : ''}`}
+					onClick={this.handleCard}
+					disabled={isPending}
+					type="button"
+				>
 					{isPending ? 'waiting for card' : 'start'}
 				</Button>
 			</div>
@@ -74,6 +107,8 @@ export class SignUp extends Component {
 function mapStateToProps(state) {
 	return {
 		home: state.home,
+		isPending: state.auth.waitCardPending,
+		cardId: state.auth.cardId,
 	};
 }
 

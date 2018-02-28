@@ -8,8 +8,9 @@
 
 import initialState from './initialState';
 import { reducer as waitCardReducer } from './waitCard';
+import { reducer as createNewUserReducer } from './createNewUser';
 
-const reducers = [waitCardReducer];
+const reducers = [waitCardReducer, createNewUserReducer];
 
 export default function reducer(state = initialState, action) {
 	let newState;
