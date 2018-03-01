@@ -21,11 +21,12 @@
     border: none;
     padding: 3px;
     &:hover{
-      color: #ff990091;
+      color: #4ebfbb;
     }
   }
   &:hover{
     cursor: pointer;
-    border-color: #ff990091;
+    color: #4ebfbb;
+    border-color: #4ebfbb;
   }
 }

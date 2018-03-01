@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 export default class Button extends Component {
 	static propTypes = {
 		styleClass: PropTypes.string,
+		type: PropTypes.string,
 		onlyIcon: PropTypes.bool,
 		children: PropTypes.node,
 		disabled: PropTypes.bool,
@@ -11,6 +12,7 @@ export default class Button extends Component {
 	};
 	static defaultProps = {
 		styleClass: null,
+		type: 'button',
 		onlyIcon: false,
 		children: 'click',
 		disabled: false,
@@ -23,6 +25,7 @@ export default class Button extends Component {
 			onlyIcon,
 			onClick,
 			disabled,
+			type,
 		} = this.props;
 		return (
 			<button
@@ -30,6 +33,7 @@ export default class Button extends Component {
 					onlyIcon ? 'onlyIcon' : ''
 				}`}
 				onClick={onClick}
+				type={type}
 				disabled={disabled}
 			>
 				{children}

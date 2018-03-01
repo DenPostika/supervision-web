@@ -7,16 +7,14 @@ export default class TextInput extends Component {
 		name: PropTypes.string.isRequired,
 		placeholder: PropTypes.string,
 		styleClass: PropTypes.string,
-		hasError: PropTypes.bool,
-		errorMsg: PropTypes.string,
+		hasError: PropTypes.string,
 		onChange: PropTypes.func,
 	};
 	static defaultProps = {
 		label: null,
 		placeholder: null,
 		styleClass: null,
-		hasError: false,
-		errorMsg: 'error',
+		hasError: null,
 		onChange: () => {},
 	};
 	state = {
@@ -32,14 +30,13 @@ export default class TextInput extends Component {
 			placeholder,
 			styleClass,
 			hasError,
-			errorMsg,
 			onChange,
 			disabled,
 			value,
 		} = this.props;
 		const { isFocused } = this.state;
 		return (
-			<div className="input_wrap">
+			<div className={`input_wrap ${hasError && 'hasError'}`}>
 				{label && <label htmlFor={name}>{label}</label>}
 				<input
 					type="text"
@@ -58,11 +55,11 @@ export default class TextInput extends Component {
 					className="underline"
 					style={{
 						backgroundColor: `${
-							isFocused ? 'transparent' : 'transparent'
+							isFocused ? '#2db7f5' : 'transparent'
 						}`,
 					}}
 				/>
-				{hasError && <span className="input_error">{errorMsg}</span>}
+				<span className="input_error">{hasError}</span>
 			</div>
 		);
 	}

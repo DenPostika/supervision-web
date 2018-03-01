@@ -1,2 +1,2 @@
-export { socketTaskManager, watchWaitCard } from './waitCard';
+export { watchWaitCard } from './waitCard';
 export { watchCreateNewUser } from './createNewUser';

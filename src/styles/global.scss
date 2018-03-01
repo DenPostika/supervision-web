@@ -22,7 +22,7 @@ a {
   color: #2db7f5;
   text-decoration: none;
   &:hover {
-    color: #ff900091;
+    color: #4ebfbb;
     border: none;
   }
 }
@@ -80,6 +80,12 @@ h6 {
   border-radius: 5px;
   &.no-padding{
     padding: 0;
+  }
+  .box-header{
+    margin-bottom: 15px;
+  }
+  .box-footer{
+    margin-top: 15px;
   }
 }
 .title{

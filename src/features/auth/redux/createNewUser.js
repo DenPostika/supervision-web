@@ -1,5 +1,7 @@
+import axios from 'axios/index';
 import { delay, takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
+
 import {
 	AUTH_CREATE_NEW_USER_BEGIN,
 	AUTH_CREATE_NEW_USER_SUCCESS,
@@ -7,10 +9,14 @@ import {
 	AUTH_CREATE_NEW_USER_DISMISS_ERROR,
 } from './constants';
 
-export function createNewUser() {
+// const serverURL = 'http://localhost:4040';
+const serverURL = 'https://supervision-li.herokuapp.com/api/';
+
+export function createNewUser(userData) {
 	// If need to pass args to saga, pass it with the begin action.
 	return {
 		type: AUTH_CREATE_NEW_USER_BEGIN,
+		payload: userData,
 	};
 }
 
@@ -21,12 +27,13 @@ export function dismissCreateNewUserError() {
 }
 
 // worker Saga: will be fired on AUTH_CREATE_NEW_USER_BEGIN actions
-export function* doCreateNewUser() {
+export function* doCreateNewUser(type, userData) {
+	const { payload } = userData;
 	// If necessary, use argument to receive the begin action with parameters.
 	let res;
 	try {
 		// Do Ajax call or other async request here. delay(20) is just a placeholder.
-		res = yield call(delay, 20);
+		res = yield axios.post(`${serverURL}/api/users`, payload);
 	} catch (err) {
 		yield put({
 			type: AUTH_CREATE_NEW_USER_FAILURE,
@@ -48,8 +55,8 @@ export function* doCreateNewUser() {
   dispatched while another is already pending, that pending one is cancelled
   and only the latest one will be run.
 */
-export function* watchCreateNewUser() {
-	yield takeEvery(AUTH_CREATE_NEW_USER_BEGIN, doCreateNewUser);
+export function* watchCreateNewUser(data) {
+	yield takeEvery(AUTH_CREATE_NEW_USER_BEGIN, doCreateNewUser, data);
 }
 
 // Redux reducer

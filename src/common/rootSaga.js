@@ -16,7 +16,7 @@ const sagas = featureSagas
 	.filter(s => typeof s === 'function');
 
 function* rootSaga() {
-	yield fork(authSagas.socketTaskManager);
+	// yield fork(authSagas.socketTaskManager);
 	yield sagas.map(saga => saga());
 }
 

@@ -61,7 +61,30 @@
   }
   .underline{
     height: 2px;
+    position: relative;
+    top: -2px;
+    border-radius: 0 0 5px 5px;
     background-color: transparent;
+  }
+  .input_error{
+    height: 15px;
+    min-width: 30px;
+    display: inline-block;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  &.hasError{
+    .underline{
+      background-color: #f0af03 !important;
+    }
+    .input_error{
+      color: #f0af03;
+      font-size: 0.8em;
+      font-weight: 300;
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 @keyframes underlineInput {

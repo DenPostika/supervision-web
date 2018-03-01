@@ -7,11 +7,10 @@ import {
 	AUTH_WAIT_CARD_SUCCESS,
 	AUTH_WAIT_CARD_FAILURE,
 	AUTH_WAIT_CARD_DISMISS_ERROR,
-	AUTH_CREATE_NEW_USER_FAILURE,
 } from './constants';
 
-const socketServerURL = 'http://localhost:3000';
-const serverURL = 'http://localhost:4040';
+const socketServerURL = 'https://supervision-li.herokuapp.com:3000';
+const serverURL = 'https://supervision-li.herokuapp.com';
 
 export function waitCard() {
 	// yield put({ type: 'WEBSOCKET_START_TASK' });
@@ -30,14 +29,13 @@ function* externalListener(chanel, task) {
 	while (true) {
 		const action = yield take(chanel);
 		yield put(action);
-		console.log(action);
+		yield cancel(task);
 	}
 }
 
 function initSocketListener(socket) {
 	return eventChannel(emit => {
 		socket.on('card-id', data => {
-			console.log('data :', data);
 			emit({ type: AUTH_WAIT_CARD_SUCCESS, payload: data });
 		});
 
@@ -95,6 +93,7 @@ export function* startTask() {
   and only the latest one will be run.
 */
 export function* watchWaitCard() {
+	yield takeEvery(AUTH_WAIT_CARD_BEGIN, socketTaskManager);
 	yield takeEvery(AUTH_WAIT_CARD_BEGIN, startTask);
 }
 
