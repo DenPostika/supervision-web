@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import * as actions from './redux/actions';
 
 import Button from '../common/Button';
+import Box from '../common/Box';
 
 export class Dashboard extends Component {
 	static propTypes = {
@@ -40,69 +41,71 @@ export class Dashboard extends Component {
 		};
 		return (
 			<div className="home-dashboard">
-				<div className="container">
-					<header className="box box-head">
-						<h1 className="title" />
-						<Button onlyIcon>
-							<Link to="./auth/sign_in">
-								<i className="fa fa-power-off" />
-							</Link>
-						</Button>
-					</header>
-					<main className="box-content">
-						<div className="chart_wrap box ">
-							<Bar
-								data={data}
-								width={100}
-								height={50}
-								options={{
-									maintainAspectRatio: false,
-									legend: {
-										display: false,
-									},
-									scales: {
-										xAxes: [
-											{
-												gridLines: {
-													display: false,
+				<Box>
+					<div className="container">
+						<header className="box box-head">
+							<h1 className="title">Dashboard</h1>
+							<Button onlyIcon>
+								<Link to="./auth/sign_in">
+									<i className="fa fa-power-off" />
+								</Link>
+							</Button>
+						</header>
+						<main className="box-content">
+							<div className="chart_wrap box ">
+								<Bar
+									data={data}
+									width={100}
+									height={50}
+									options={{
+										maintainAspectRatio: false,
+										legend: {
+											display: false,
+										},
+										scales: {
+											xAxes: [
+												{
+													gridLines: {
+														display: false,
+													},
+													ticks: {
+														fontColor: '#f2f2f295',
+													},
 												},
-												ticks: {
-													fontColor: '#f2f2f295',
+											],
+											yAxes: [
+												{
+													gridLines: {
+														display: false,
+													},
+													ticks: {
+														fontColor: '#f2f2f295',
+													},
 												},
-											},
-										],
-										yAxes: [
-											{
-												gridLines: {
-													display: false,
-												},
-												ticks: {
-													fontColor: '#f2f2f295',
-												},
-											},
-										],
-									},
-								}}
-							/>
-						</div>
-						<div className="list_wrap box no-padding">
-							<div className="list_head list_row">
-								<div className="date">date</div>
-								<div className="in">has come</div>
-								<div className="out">gone home</div>
-								<div className="total">total hours</div>
+											],
+										},
+									}}
+								/>
 							</div>
-							{this.renderTrackList(arr)}
-							<div className="week_sum list_row">
-								<div className="date">week summary</div>
-								<div className="in" />
-								<div className="out" />
-								<div className="total">40</div>
+							<div className="list_wrap box no-padding">
+								<div className="list_head list_row">
+									<div className="date">date</div>
+									<div className="in">has come</div>
+									<div className="out">gone home</div>
+									<div className="total">total hours</div>
+								</div>
+								{this.renderTrackList(arr)}
+								<div className="week_sum list_row">
+									<div className="date">week summary</div>
+									<div className="in" />
+									<div className="out" />
+									<div className="total">40</div>
+								</div>
 							</div>
-						</div>
-					</main>
-					{/* <footer className="box footer">footer</footer> */}
-				</div>
+						</main>
+						{/* <footer className="box footer">footer</footer> */}
+					</div>
+				</Box>
 			</div>
 		);
 	}

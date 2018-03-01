@@ -18,7 +18,7 @@ export class Auth extends Component {
 	render() {
 		return (
 			<div className="auth-auth">
-				<div className="authForm_wrap box">{this.props.children}</div>
+				{this.props.children}
 			</div>
 		);
 	}

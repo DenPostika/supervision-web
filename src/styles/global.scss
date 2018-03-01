@@ -117,3 +117,38 @@ h6 {
   0% {transform: rotate(0);}
   100% {transform: rotate(360deg);}
 }
+.mount-enter {
+  opacity: 0.01;
+}
+
+.mount-enter.mount-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.mount-leave {
+  opacity: 1;
+}
+.mount-exit {
+  transition: opacity .2s linear;
+  opacity: 1;
+}
+
+.mount-exit-active {
+  opacity: 0;
+}
+.mount-leave.mount-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+  //transition: opacity .5s ease-in, transform 0.5s ease-in;
+}
+.mount-appear {
+  opacity: 0.01;
+  transform: translateY(-150%);
+}
+
+.mount-appear.mount-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .5s ease-in, transform 0.5s ease-in;
+}

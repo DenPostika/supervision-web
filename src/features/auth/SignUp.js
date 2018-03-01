@@ -7,6 +7,7 @@ import * as actions from './redux/actions';
 
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
+import Box from '../common/Box';
 
 export class SignUp extends Component {
 	static propTypes = {
@@ -158,17 +159,19 @@ export class SignUp extends Component {
 	render() {
 		const { cardId } = this.props;
 		return (
-			<form className="auth-sign-up" onSubmit={this.handleSubmit}>
-				<div className="box-header">
-					<h2 className="title">registration</h2>
-				</div>
-				{this.renderContent(cardId)}
-				<div className="box-footer">
-					<span className="link_wrap">
-						<Link to="sign_in">sing in</Link>
-					</span>
-				</div>
-			</form>
+			<Box styleClass="authForm_wrap box">
+				<form className="auth-sign-up" onSubmit={this.handleSubmit}>
+					<div className="box-header">
+						<h2 className="title">registration</h2>
+					</div>
+					{this.renderContent(cardId)}
+					<div className="box-footer">
+						<span className="link_wrap">
+							<Link to="sign_in">sing in</Link>
+						</span>
+					</div>
+				</form>
+			</Box>
 		);
 	}
 }
