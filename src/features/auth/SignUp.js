@@ -7,7 +7,6 @@ import * as actions from './redux/actions';
 
 import Button from '../common/Button';
 import TextInput from '../common/TextInput';
-import Box from '../common/Box';
 
 export class SignUp extends Component {
 	static propTypes = {
@@ -40,10 +39,10 @@ export class SignUp extends Component {
 	validateSingUp = data => {
 		const errors = {};
 		if (data.username === '') {
-			errors.username = 'fill User Name';
+			errors.username = 'Fill User Name';
 		}
 		if (data.password === '') {
-			errors.password = 'fill Password';
+			errors.password = 'Fill Password';
 		}
 		if (
 			data.mobileNumber === '' ||
@@ -55,9 +54,9 @@ export class SignUp extends Component {
 			errors.email = 'Email incorrect';
 		}
 		if (data.slackName === '') {
-			errors.slackName = 'fill Slack Name';
+			errors.slackName = 'Fill Slack Name';
 		}
-		if (errors === {}) {
+		if (Object.keys(errors).length === 0) {
 			return { isValid: true };
 		}
 		return { isValid: false, errors };
@@ -80,21 +79,19 @@ export class SignUp extends Component {
 			email,
 			cardId,
 		};
-		console.log(this.validateSingUp(userData).isValid);
+		console.log(this.validateSingUp(userData));
 		if (this.validateSingUp(userData).isValid) {
 			this.props.actions.createNewUser(userData);
 		} else {
 			this.setState({ errors: this.validateSingUp(userData).errors });
 		}
-		// this.props.actions.createNewUser(userData);
-		// console.log('submit');
 	};
 	handleCard = e => {
 		e.preventDefault();
 		this.props.actions.waitCard();
 	};
 	renderContent = cardId => {
-		const { isPending } = this.props;
+		const { isPending, errMsg, isPendingCreateUser } = this.props;
 		const { errors } = this.state;
 		const form = (
 			<div className="box-content extra_height">
@@ -110,6 +107,7 @@ export class SignUp extends Component {
 						placeholder="password"
 						onChange={this.onChange}
 						hasError={errors.password}
+						type="password"
 					/>
 					<TextInput
 						name="mobileNumber"
@@ -130,10 +128,23 @@ export class SignUp extends Component {
 						onChange={this.onChange}
 						hasError={errors.email}
 					/>
+					{errMsg && (
+						<div className="error">
+							{errMsg.username && (
+								<span>{errMsg.username.message}</span>
+							)}
+							{errMsg.slackName && (
+								<span>{errMsg.slackName.message}</span>
+							)}
+							{errMsg.email && (
+								<span>{errMsg.email.message}</span>
+							)}
+						</div>
+					)}
 					<Button
 						styleClass={`${isPending ? 'preloader-smile' : ''}`}
-						// onClick={e => this.handleSubmit(e)}
 						type="submit"
+						disabled={isPendingCreateUser}
 					>
 						sign up
 					</Button>
@@ -159,7 +170,7 @@ export class SignUp extends Component {
 	render() {
 		const { cardId } = this.props;
 		return (
-			<Box styleClass="authForm_wrap box">
+			<div className="authForm_wrap box">
 				<form className="auth-sign-up" onSubmit={this.handleSubmit}>
 					<div className="box-header">
 						<h2 className="title">registration</h2>
@@ -171,7 +182,7 @@ export class SignUp extends Component {
 						</span>
 					</div>
 				</form>
-			</Box>
+			</div>
 		);
 	}
 }
@@ -181,7 +192,9 @@ function mapStateToProps(state) {
 	return {
 		home: state.home,
 		isPending: state.auth.waitCardPending,
+		isPendingCreateUser: state.auth.createNewUserPending,
 		cardId: state.auth.cardId,
+		errMsg: state.auth.createNewUserError,
 	};
 }
 

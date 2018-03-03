@@ -2,7 +2,7 @@
 *{
   box-sizing: border-box;
   font-size: 14px;
-  font-family: "Open Sans",sans-serif;
+  font-family: Arial, "Helvetica Neue",Helvetica,sans-serif;
 }
 html, body, #react-root {
   height: 100%;
@@ -94,6 +94,18 @@ h6 {
   color: #f2f2f2;
   letter-spacing: 1.1px;
 }
+.error{
+  color: #f0af03;
+  font-size: 0.8em;
+  font-weight: 300;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & > *{
+    margin-bottom: 5px;
+  }
+}
 .preloader-smile{
   position: relative;
   perspective: 50px;
@@ -117,38 +129,25 @@ h6 {
   0% {transform: rotate(0);}
   100% {transform: rotate(360deg);}
 }
+
+.mount-exit {
+  opacity: 1;
+  //transform: translateY(0);
+}
+
+.mount-exit.mount-exit-active {
+  opacity: 0.01;
+  //transform: translateY(150%);
+  transition: opacity .3s ease-out;
+}
+
 .mount-enter {
   opacity: 0.01;
+  //transform: translateY(-150%);
 }
 
 .mount-enter.mount-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.mount-leave {
-  opacity: 1;
-}
-.mount-exit {
-  transition: opacity .2s linear;
-  opacity: 1;
-}
-
-.mount-exit-active {
-  opacity: 0;
-}
-.mount-leave.mount-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
-  //transition: opacity .5s ease-in, transform 0.5s ease-in;
-}
-.mount-appear {
-  opacity: 0.01;
-  transform: translateY(-150%);
-}
-
-.mount-appear.mount-appear-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .5s ease-in, transform 0.5s ease-in;
+  //transform: translateY(0);
+  transition: opacity .4s ease-in;
 }

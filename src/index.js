@@ -12,12 +12,10 @@ import Root from './Root';
 const store = configStore();
 
 function renderApp(app) {
-  render(
-    <AppContainer>
-      {app}
-    </AppContainer>,
-    document.getElementById('react-root')
-  );
+	render(
+		<AppContainer>{app}</AppContainer>,
+		document.getElementById('react-root'),
+	);
 }
 
 renderApp(<Root store={store} routeConfig={routeConfig} />);
@@ -25,8 +23,8 @@ renderApp(<Root store={store} routeConfig={routeConfig} />);
 // Hot Module Replacement API
 /* istanbul ignore if  */
 if (module.hot) {
-  module.hot.accept('./common/routeConfig', () => {
+	module.hot.accept('./common/routeConfig', () => {
     const nextRouteConfig = require('./common/routeConfig').default; // eslint-disable-line
-    renderApp(<Root store={store} routeConfig={nextRouteConfig} />);
-  });
+		renderApp(<Root store={store} routeConfig={nextRouteConfig} />);
+	});
 }

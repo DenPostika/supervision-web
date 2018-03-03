@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
+import Box from '../common/Box';
+
 export class Auth extends Component {
 	static propTypes = {
 		auth: PropTypes.object.isRequired,
@@ -16,9 +18,14 @@ export class Auth extends Component {
 	};
 
 	render() {
+		const { location } = this.props;
 		return (
 			<div className="auth-auth">
-				{this.props.children}
+				<Box
+					currentKey={location.pathname}
+				>
+					{this.props.children}
+				</Box>
 			</div>
 		);
 	}

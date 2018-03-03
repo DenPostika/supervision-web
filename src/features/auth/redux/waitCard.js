@@ -9,7 +9,7 @@ import {
 	AUTH_WAIT_CARD_DISMISS_ERROR,
 } from './constants';
 
-const socketServerURL = 'https://supervision-li.herokuapp.com:3000';
+const socketServerURL = 'https://supervision-li.herokuapp.com';
 const serverURL = 'https://supervision-li.herokuapp.com';
 
 export function waitCard() {

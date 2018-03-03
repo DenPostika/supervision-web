@@ -8,6 +8,7 @@ export default class TextInput extends Component {
 		placeholder: PropTypes.string,
 		styleClass: PropTypes.string,
 		hasError: PropTypes.string,
+		type: PropTypes.string,
 		onChange: PropTypes.func,
 	};
 	static defaultProps = {
@@ -15,6 +16,7 @@ export default class TextInput extends Component {
 		placeholder: null,
 		styleClass: null,
 		hasError: null,
+		type: 'text',
 		onChange: () => {},
 	};
 	state = {
@@ -33,13 +35,14 @@ export default class TextInput extends Component {
 			onChange,
 			disabled,
 			value,
+			type,
 		} = this.props;
 		const { isFocused } = this.state;
 		return (
 			<div className={`input_wrap ${hasError && 'hasError'}`}>
 				{label && <label htmlFor={name}>{label}</label>}
 				<input
-					type="text"
+					type={type}
 					className={`common-text-input input ${styleClass} ${disabled &&
 						'disabled'}`}
 					name={name}
