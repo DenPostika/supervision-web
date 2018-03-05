@@ -1,8 +1,8 @@
 import initialState from './initialState';
-import { reducer as fetchUserDataReducer } from './fetchUserData';
+import { reducer as fetchTrackingListReducer } from './fetchTrackingList';
 
 const reducers = [
-  fetchUserDataReducer,
+  fetchTrackingListReducer,
 ];
 
 export default function reducer(state = initialState, action) {

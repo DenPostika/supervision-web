@@ -10,11 +10,8 @@ import {
 	AUTH_SIGN_IN_DISMISS_ERROR,
 } from './constants';
 
-const serverURL = 'https://supervision-li.herokuapp.com';
-
 export function signIn(userData) {
 	// If need to pass args to saga, pass it with the begin action.
-	console.log('start sign in', userData);
 	return {
 		type: AUTH_SIGN_IN_BEGIN,
 		payload: userData,
@@ -32,21 +29,23 @@ export function* doSignIn(type, userData) {
 	const { payload } = userData;
 	// If necessary, use argument to receive the begin action with parameters.
 	// Do Ajax call or other async request here. delay(20) is just a placeholder.
-	const res = yield axios.post(`${serverURL}/api/auth/login`, payload);
-	if (!res.data.hasOwnProperty('errors')) {
-		console.log('data :', res.data);
-		localStorage.token = res.data.token;
-		yield put({
-			type: AUTH_SIGN_IN_SUCCESS,
-			payload: res,
+	try {
+		const res = yield axios.post(`/api/auth/login`, payload);
+		console.log(res);
+		if (!res.data.hasOwnProperty('errors')) {
+			localStorage.token = res.data.token;
+			yield put({
+				type: AUTH_SIGN_IN_SUCCESS,
+				payload: res,
+			});
+			return yield put(push('/dashboard'));
+		}
+	} catch (err) {
+		return yield put({
+			type: AUTH_SIGN_IN_FAILURE,
+			payload: { error: 'invalid username or password' },
 		});
-		return yield put(push('/dashboard'));
 	}
-	// Dispatch success action out of try/catch so that render errors are not catched.
-	return yield put({
-		type: AUTH_SIGN_IN_FAILURE,
-		payload: { error: res.data.errors },
-	});
 }
 
 /*
@@ -71,7 +70,6 @@ export function reducer(state, action) {
 			};
 
 		case AUTH_SIGN_IN_SUCCESS:
-			console.log('reducer', action.payload);
 			return {
 				...state,
 				signInPending: false,
@@ -81,7 +79,6 @@ export function reducer(state, action) {
 			};
 
 		case AUTH_SIGN_IN_FAILURE:
-			console.log('err', action.payload.error);
 			return {
 				...state,
 				signInPending: false,

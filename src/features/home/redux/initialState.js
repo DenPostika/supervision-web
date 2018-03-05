@@ -1,6 +1,6 @@
 const initialState = {
-  fetchUserDataPending: false,
-  fetchUserDataError: null,
+	fetchTrackingListPending: false,
+	fetchTrackingListError: null,
 };
 
 export default initialState;

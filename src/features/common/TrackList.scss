@@ -1,0 +1,40 @@
+@import '../../styles/mixins';
+
+.common-track-list {
+  .list_wrap{
+    display: flex;
+    flex-direction: column;
+    .list_row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      height: 30px;
+      color: #d2d2d2;
+      font-weight: 300;
+      &:nth-child(odd){
+        background-color: rgba(51, 51, 51, 0.3);
+        border-top: 1px solid rgba(51, 51, 51, 0.35);
+      }
+      & > *{
+        flex: 1 1 25%;
+        text-align: center;
+        color: inherit;
+      }
+    }
+    .week_sum{
+      border-bottom: 2px solid #999;
+      border-top: 2px solid #ddd;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+      color: #f2f2f2;
+    }
+    .list_head{
+      border-bottom: 2px solid #999;
+      text-transform: uppercase;
+      color: #f2f2f2;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+    }
+  }
+}

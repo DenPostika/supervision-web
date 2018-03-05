@@ -10,9 +10,6 @@ import {
 	AUTH_CREATE_NEW_USER_DISMISS_ERROR,
 } from './constants';
 
-// const serverURL = 'http://localhost:4040';
-const serverURL = 'https://supervision-li.herokuapp.com';
-
 export function createNewUser(userData) {
 	// If need to pass args to saga, pass it with the begin action.
 	return {
@@ -32,10 +29,8 @@ export function* doCreateNewUser(type, userData) {
 	const { payload } = userData;
 	// If necessary, use argument to receive the begin action with parameters.
 	// Do Ajax call or other async request here. delay(20) is just a placeholder.
-	const res = yield axios.post(`${serverURL}/api/users`, payload);
-	console.log(!res.data.hasOwnProperty('errors'));
+	const res = yield axios.post(`/api/users`, payload);
 	if (!res.data.hasOwnProperty('errors')) {
-		console.log('data :', res.data);
 		localStorage.token = res.data.token;
 		yield put({
 			type: AUTH_CREATE_NEW_USER_SUCCESS,
@@ -74,7 +69,6 @@ export function reducer(state, action) {
 			};
 
 		case AUTH_CREATE_NEW_USER_SUCCESS:
-			console.log('reducer', action.payload);
 			return {
 				...state,
 				createNewUserPending: false,

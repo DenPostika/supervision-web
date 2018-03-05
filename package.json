@@ -87,6 +87,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.21.0",
     "react-chartjs-2": "^2.7.0",
     "react-transition-group": "^2.2.1",
     "redux-saga": "^0.16.0",

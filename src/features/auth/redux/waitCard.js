@@ -10,7 +10,6 @@ import {
 } from './constants';
 
 const socketServerURL = 'https://supervision-li.herokuapp.com';
-const serverURL = 'https://supervision-li.herokuapp.com';
 
 export function waitCard() {
 	// yield put({ type: 'WEBSOCKET_START_TASK' });
@@ -73,7 +72,7 @@ export function* socketTaskManager() {
 
 export function* startTask() {
 	try {
-		const res = yield axios.post(`${serverURL}/api/wait-card-id`);
+		const res = yield axios.post(`/api/wait-card-id`);
 		if (res.status === 200) {
 			yield put({ type: 'WEBSOCKET_START_TASK' });
 		}

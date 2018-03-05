@@ -79,7 +79,6 @@ export class SignUp extends Component {
 			email,
 			cardId,
 		};
-		console.log(this.validateSingUp(userData));
 		if (this.validateSingUp(userData).isValid) {
 			this.props.actions.createNewUser(userData);
 		} else {

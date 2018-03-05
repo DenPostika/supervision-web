@@ -39,13 +39,11 @@ export class SignIn extends Component {
 	};
 	handleSubmit = e => {
 		e.preventDefault();
-		console.log('sign in');
 		const { username, password } = this.state;
 		const data = {
 			username,
 			password,
 		};
-		console.log(this.validateSignIn(data).isValid);
 		if (this.validateSignIn(data).isValid) {
 			this.props.actions.signIn(data);
 		} else {
@@ -79,7 +77,7 @@ export class SignIn extends Component {
 							hasError={errors.password}
 							type="password"
 						/>
-						{errMsg && <div className="error">error</div>}
+						{errMsg && <div className="error">{errMsg}</div>}
 						<Button
 							styleClass="login"
 							type="submit"

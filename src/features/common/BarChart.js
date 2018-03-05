@@ -20,7 +20,7 @@ export default class BarChart extends Component {
 			],
 		};
 		return (
-			<div className="chart_wrap box ">
+			<div className="common-bar-chart chart_wrap box ">
 				<Bar
 					data={data}
 					width={100}

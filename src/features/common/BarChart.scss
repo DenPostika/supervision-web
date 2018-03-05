@@ -1,5 +1,8 @@
 @import '../../styles/mixins';
 
 .common-bar-chart {
-
+  &.chart_wrap{
+    min-height: 300px;
+    position: relative;
+  }
 }

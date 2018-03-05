@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { redirect } from '../common/redux/redirect';
 import { getUserInfo } from '../auth/redux/getUserInfo';
 import checkAuth from '../auth/utils/checkAuth';
+import { setAuthorizationToken} from '../../configDefaultAPI';
 /*
   This is the root component of your app. Here you define the overall layout
   and the container of the react router.
@@ -19,14 +20,15 @@ class App extends Component {
 		children: '',
 	};
 	componentDidMount() {
-		this.props.getUserInfo();
 		if (!checkAuth()) {
 			this.props.redirect('/auth/sign_in');
 		}
+		this.props.getUserInfo();
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.location !== prevProps.location) {
 			this.props.getUserInfo();
+			setAuthorizationToken(localStorage.token);
 		}
 	}
 	render() {

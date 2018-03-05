@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import history from './common/history';
+import { setAuthorizationToken, setDefaultAxios } from './configDefaultAPI';
 
 function renderRouteConfigV3(Container, routes, contextPath) {
 	// Resolve route config object in React Router v3.
@@ -58,8 +59,11 @@ export default class Root extends React.Component {
 		store: PropTypes.object.isRequired,
 		routeConfig: PropTypes.array.isRequired,
 	};
+
 	render() {
 		const children = renderRouteConfigV3(null, this.props.routeConfig, '/');
+		setDefaultAxios();
+		setAuthorizationToken(localStorage.token);
 		return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>{children}</ConnectedRouter>
