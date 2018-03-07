@@ -8,6 +8,7 @@ import Button from '../common/Button';
 import Box from '../common/Box';
 import BarChart from '../common/BarChart';
 import TrackList from '../common/TrackList';
+import StatusWidget from '../common/StatusWidget';
 
 export class Dashboard extends Component {
 	static propTypes = {
@@ -16,6 +17,7 @@ export class Dashboard extends Component {
 	};
 	componentDidMount() {
 		this.props.actions.fetchTrackingList();
+		this.props.actions.fetchUsers();
 	}
 
 	handleSignOut = e => {
@@ -23,7 +25,7 @@ export class Dashboard extends Component {
 		this.props.actions.signOut();
 	};
 	render() {
-		const { userInfo, trackingList } = this.props;
+		const { userInfo, trackingList, users } = this.props;
 		return (
 			<div className="home-dashboard">
 				<Box>
@@ -44,7 +46,12 @@ export class Dashboard extends Component {
 							</div>
 						</header>
 						<main className="box-content">
-							<BarChart />
+							<StatusWidget usersList={users} trackingList={trackingList} />
+							<BarChart
+								list={trackingList}
+								cardId="364847"
+								dateRange="week"
+							/>
 							<TrackList list={trackingList} cardId="364847" />
 						</main>
 						{/* <footer className="box footer">footer</footer> */}
@@ -61,6 +68,7 @@ function mapStateToProps(state) {
 		home: state.home,
 		userInfo: state.auth.userInfo,
 		trackingList: state.home.trackingList,
+		users: state.home.users,
 	};
 }
 

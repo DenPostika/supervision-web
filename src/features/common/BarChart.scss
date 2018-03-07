@@ -3,6 +3,15 @@
 .common-bar-chart {
   &.chart_wrap{
     min-height: 300px;
+    max-height: 300px;
+    overflow: hidden;
     position: relative;
+  }
+}
+@media screen and (max-width: 480px) {
+  .common-bar-chart {
+    &.chart_wrap{
+      min-height: 180px;
+    }
   }
 }
