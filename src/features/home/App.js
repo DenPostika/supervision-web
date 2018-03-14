@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { redirect } from '../common/redux/redirect';
 import { getUserInfo } from '../auth/redux/getUserInfo';
 import checkAuth from '../auth/utils/checkAuth';
-import { setAuthorizationToken} from '../../configDefaultAPI';
+import { setAuthorizationToken } from '../../configDefaultAPI';
 /*
   This is the root component of your app. Here you define the overall layout
   and the container of the react router.

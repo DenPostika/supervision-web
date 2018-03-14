@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import { separateDate, filterlistById } from './utils/tracking';
-
 export default class TrackList extends Component {
-	static propTypes = {};
+	static propTypes = {
+		list: PropTypes.arrayOf(PropTypes.object),
+	};
+	static defaultProps = {
+		list: [],
+	};
 
 	sumTime = (list = []) => {
 		if (list.length === 0) {
 			return 0;
 		}
-		const minutes = list.map(el =>
-			moment(el.max).diff(moment(el.min), 'minutes'),
-		);
+		const minutes = list.map(el => el.worktime);
 		return minutes.reduce((p, c) => p + c, 0);
 	};
 	allocateTime = (minutes = 0) => {
@@ -22,25 +25,37 @@ export default class TrackList extends Component {
 	};
 
 	renderTrackList = (list = []) =>
-		list.map(item => (
-			<div key={item.date} className="list_row">
-				<div className="date">{item.date}</div>
-				<div className="in">{moment(item.min).format('HH:mm')}</div>
-				<div className="out">
-					{item.min !== item.max
-						? moment(item.max).format('HH:mm')
-						: '--:--'}
+		list
+			.sort((a, b) =>
+				moment(b.date, 'DD.MM.YYYY').diff(moment(a.date, 'DD.MM.YYYY')),
+			)
+			.map(item => (
+				<div key={item.date} className="list_row">
+					<div className="date">{item.date}</div>
+					<div className="in">
+						{moment(item.comming).format('HH:mm')}
+					</div>
+					<div className="out">
+						{item.leaving
+							? moment(item.leaving).format('HH:mm')
+							: '--:--'}
+					</div>
+					<div className="total">
+						{this.allocateTime(item.worktime)}
+					</div>
 				</div>
-				<div className="total">
-					{this.allocateTime(
-						moment(item.max).diff(moment(item.min), 'minutes'),
-					)}
-				</div>
-			</div>
-		));
+			));
 	render() {
-		const { list, cardId } = this.props;
-		const data = separateDate(filterlistById(list, cardId));
+		const {
+			list,
+			handleDatePicker,
+			handleStart,
+			handleEnd,
+			checkInDate,
+			handleSubmit,
+			checkInStart,
+			checkInEnd,
+		} = this.props;
 		return (
 			<div className="common-track-list">
 				<div className="list_wrap box no-padding">
@@ -48,15 +63,49 @@ export default class TrackList extends Component {
 						<div className="date">date</div>
 						<div className="in">has come</div>
 						<div className="out">gone home</div>
-						<div className="total">total hours</div>
+						<div className="total">work time</div>
 					</div>
-					{this.renderTrackList(data)}
+					{this.renderTrackList(list)}
+					<div className="manual_track list_row">
+						<div className="date">
+							<DatePicker
+								selected={checkInDate}
+								onChange={handleDatePicker}
+								dateFormat="DD.MM.YYYY"
+							/>
+						</div>
+						<div className="start">
+							<DatePicker
+								selected={checkInStart}
+								onChange={handleStart}
+								showTimeSelect
+								timeFormat="HH:mm"
+								timeIntervals={60}
+								dateFormat="HH:mm DD.MM.YYYY"
+								timeCaption="time"
+							/>
+						</div>
+						<div className="end">
+							<DatePicker
+								selected={checkInEnd}
+								onChange={handleEnd}
+								showTimeSelect
+								timeFormat="HH:mm"
+								timeIntervals={60}
+								dateFormat="HH:mm DD.MM.YYYY"
+								timeCaption="time"
+							/>
+						</div>
+						<div className="total">
+							<button onClick={handleSubmit}>submit</button>
+						</div>
+					</div>
 					<div className="week_sum list_row">
 						<div className="date">summary</div>
 						<div className="in" />
 						<div className="out" />
 						<div className="total">
-							{this.allocateTime(this.sumTime(data))}
+							{this.allocateTime(this.sumTime(list))}
 						</div>
 					</div>
 				</div>

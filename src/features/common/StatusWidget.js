@@ -4,25 +4,37 @@ export default class StatusWidget extends Component {
 	static propTypes = {};
 	renderUsers = (users = [], lists = []) => {
 		const exceptAdmin = users.filter(user => user.type !== 'admin');
-		console.log(exceptAdmin);
 		return exceptAdmin.map(user => (
-			<div key={user.cardId} role="button" fval={user.cardId} className="userCard">
-				<div className="box-header">
+			<div key={user.cardId} className="userCard">
+				<button
+					className="btn box-header"
+					fval={user.cardId}
+					onClick={this.props.selectUser}
+					role="button"
+				>
 					<div className="user_name">{user.username}</div>
-					<div className="user_status active">at work</div>
-				</div>
+					<div
+						className={`user_status ${user.atWork ? 'active' : ''}`}
+					>
+						at work
+					</div>
+				</button>
 				<div className="box-content">
 					<div className="info">
 						<span className="phone">
-							tel:<span className="val">{user.mobileNumber}</span>
+							tel:
+							<a
+								href={`tel:${user.mobileNumber}`}
+								className="val"
+							>
+								{user.mobileNumber}
+							</a>
 						</span>
 						<span className="email">
-							email:<span className="val">{user.email}</span>
-						</span>
-						<span className="slack">
-							slack name:<span className="val">
-								{user.slackName}
-                  </span>
+							email:
+							<a href={`mailto:${user.email}`} className="val">
+								{user.email}
+							</a>
 						</span>
 					</div>
 				</div>

@@ -89,6 +89,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.21.0",
     "react-chartjs-2": "^2.7.0",
+    "react-datepicker": "^1.2.2",
     "react-transition-group": "^2.2.1",
     "redux-saga": "^0.16.0",
     "rekit-plugin-redux-saga": "^1.0.0",

@@ -3,12 +3,21 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da
 
 import jwtDecode from 'jwt-decode';
+import moment from 'moment';
+
 import { AUTH_GET_USER_INFO } from './constants';
 
 export const getUserInfo = () => dispatch => {
-	const userInfo = localStorage.hasOwnProperty('token')
-		? jwtDecode(localStorage.token)
-		: {};
+	let userInfo = {};
+	if (localStorage.token) {
+		const today = moment();
+		const decoded = jwtDecode(localStorage.token);
+		if (moment(decoded.exp * 10000).isAfter(today)) {
+			userInfo = decoded;
+		} else {
+			delete localStorage.token;
+		}
+	}
 	return dispatch({
 		type: AUTH_GET_USER_INFO,
 		payload: userInfo,

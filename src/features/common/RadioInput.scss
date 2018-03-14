@@ -1,0 +1,19 @@
+@import '../../styles/mixins';
+
+.common-radio-input {
+  &.radioInput_wrap{
+    position: relative;
+    overflow: hidden;
+    input{
+      -webkit-appearance: none;
+      position: absolute;
+    }
+    label{
+      padding: 3px 5px;
+      display: block;
+    }
+    input:checked + label {
+      background: #57b955;
+    }
+  }
+}

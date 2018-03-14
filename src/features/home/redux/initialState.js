@@ -3,6 +3,8 @@ const initialState = {
 	fetchTrackingListError: null,
   fetchUsersPending: false,
   fetchUsersError: null,
+  fetchUserInfoPending: false,
+  fetchUserInfoError: null,
 };
 
 export default initialState;

@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
-import { filterlistById, separateDate, getDateRange } from './utils/tracking';
-import moment from 'moment/moment';
+import { getDateRange } from './utils/tracking';
+import RadioInput from './RadioInput';
 
 export default class BarChart extends Component {
 	static propTypes = {};
 	calcValues = (list = [], cardId, dateRange) => {
-		const data = separateDate(filterlistById(list, cardId));
-		const dates = data.map(el => el.date);
+		const dates = list.map(el => el.date);
 		const range = getDateRange(dateRange);
 		const values = range.map(el => {
 			if (dates.indexOf(el) >= 0) {
 				const ind = dates.indexOf(el);
-				const res = moment(data[ind].max).diff(
-					moment(data[ind].min),
-					'hours',
-					true,
-				);
+				const res = list[ind].worktime / 60;
 				return Math.round(res);
 			}
 			return 0;
@@ -25,10 +21,21 @@ export default class BarChart extends Component {
 	};
 	calcLabels = dateRange => {
 		const range = getDateRange(dateRange);
-		return range.map(el => moment(el, 'DD.MM.YYYY').format('ddd'));
+		let format = '';
+		switch (dateRange) {
+			case 'week':
+				format = 'ddd';
+				break;
+			case 'month':
+				format = 'DD';
+				break;
+			default:
+				format = 'ddd';
+		}
+		return range.map(el => moment(el, 'DD.MM.YYYY').format(format));
 	};
 	render() {
-		const { list, cardId, dateRange } = this.props;
+		const { list, dateRange, handleDateFilter } = this.props;
 		const options = {
 			maintainAspectRatio: false,
 			legend: {
@@ -67,12 +74,32 @@ export default class BarChart extends Component {
 					borderWidth: 1,
 					hoverBackgroundColor: '#3b6c9d91',
 					hoverBorderColor: '#315A8C',
-					data: this.calcValues(list, cardId, dateRange),
+					data: this.calcValues(list, dateRange),
 				},
 			],
 		};
 		return (
 			<div className="common-bar-chart chart_wrap box ">
+				<div className="filter">
+					<RadioInput
+						id="week"
+						value="week"
+						name="dateFilter"
+						onChange={handleDateFilter}
+					/>
+					<RadioInput
+						id="month"
+						value="month"
+						name="dateFilter"
+						onChange={handleDateFilter}
+					/>
+					{/* <RadioInput */}
+					{/* id="quarter" */}
+					{/* value="quarter" */}
+					{/* name="dateFilter" */}
+					{/* onChange={handleDateFilter} */}
+					{/* /> */}
+				</div>
 				<Bar data={data} width={100} height={50} options={options} />
 			</div>
 		);

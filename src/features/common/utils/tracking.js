@@ -37,3 +37,12 @@ export const getDateRange = (range = 'week') => {
 
 	return days;
 };
+export const getStartDate = range =>
+	moment()
+		.startOf(range)
+		.format('YYYY-MM-DD');
+
+export const getEndDate = range =>
+	moment()
+		.endOf(range)
+		.format('YYYY-MM-DD');

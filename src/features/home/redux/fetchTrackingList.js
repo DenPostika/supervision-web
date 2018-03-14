@@ -10,10 +10,11 @@ import {
 } from './constants';
 
 export function fetchTrackingList(
+	cardId,
 	dateStart = 0,
 	dateEnd = moment().format('YYYY-MM-DD'),
 ) {
-	const data = { dateStart, dateEnd };
+	const data = { cardId, dateStart, dateEnd };
 	return {
 		type: HOME_FETCH_TRACKING_LIST_BEGIN,
 		payload: data,
@@ -30,9 +31,9 @@ export function dismissFetchTrackingListError() {
 export function* doFetchTrackingList(type, data) {
 	// If necessary, use argument to receive the begin action with parameters.
 	// Do Ajax call or other async request here. delay(20) is just a placeholder.
-	const { dateStart, dateEnd } = data.payload;
+	const { cardId, dateStart, dateEnd } = data.payload;
 	const res = yield axios.get(
-		`/api/tracking?dateStart=${dateStart}&dateEnd=${dateEnd}`,
+		`/api/tracking?cardId=${cardId}&dateStart=${dateStart}&dateEnd=${dateEnd}`,
 	);
 	yield put({
 		type: HOME_FETCH_TRACKING_LIST_SUCCESS,

@@ -5,8 +5,8 @@ export const setDefaultAxios = () => {
 };
 export const setAuthorizationToken = token => {
 	if (token) {
-		axios.defaults.headers.authorization = `${token}`;
+		axios.defaults.headers.token = `${token}`;
 	} else {
-		delete axios.defaults.headers.authorization;
+		delete axios.defaults.headers.token;
 	}
 };
