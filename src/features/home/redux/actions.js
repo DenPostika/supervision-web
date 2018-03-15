@@ -5,3 +5,4 @@ export {
 } from './fetchTrackingList';
 export { fetchUsers, dismissFetchUsersError } from './fetchUsers';
 export { fetchUserInfo, dismissFetchUserInfoError } from './fetchUserInfo';
+export { updateTracking, dismissUpdateTrackingError } from './updateTracking';

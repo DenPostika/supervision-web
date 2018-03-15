@@ -6,7 +6,7 @@ import RadioInput from './RadioInput';
 
 export default class BarChart extends Component {
 	static propTypes = {};
-	calcValues = (list = [], cardId, dateRange) => {
+	calcValues = (list = [], dateRange) => {
 		const dates = list.map(el => el.date);
 		const range = getDateRange(dateRange);
 		const values = range.map(el => {
@@ -17,6 +17,7 @@ export default class BarChart extends Component {
 			}
 			return 0;
 		});
+
 		return values;
 	};
 	calcLabels = dateRange => {

@@ -1,7 +1,7 @@
 import { takeEvery } from 'redux-saga';
-import { put } from 'redux-saga/effects';
-import axios from 'axios/index';
+import { put, call } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import request from '../../common/utils/request';
 
 import {
 	AUTH_SIGN_IN_BEGIN,
@@ -29,23 +29,21 @@ export function* doSignIn(type, userData) {
 	const { payload } = userData;
 	// If necessary, use argument to receive the begin action with parameters.
 	// Do Ajax call or other async request here. delay(20) is just a placeholder.
-	try {
-		const res = yield axios.post(`/api/auth/login`, payload);
-		console.log(res);
-		if (!res.data.hasOwnProperty('errors')) {
-			localStorage.token = res.data.token;
-			yield put({
-				type: AUTH_SIGN_IN_SUCCESS,
-				payload: res,
-			});
-			return yield put(push('/dashboard'));
-		}
-	} catch (err) {
-		return yield put({
-			type: AUTH_SIGN_IN_FAILURE,
-			payload: { error: 'invalid username or password' },
+	const { res } = yield call(request, 'post', `/api/auth/login`, payload);
+	if (res) {
+		localStorage.token = res.data.token;
+		yield put({
+			type: AUTH_SIGN_IN_SUCCESS,
+			payload: res,
 		});
+		return yield put(push('/dashboard'));
 	}
+	// } catch (err) {
+	return yield put({
+		type: AUTH_SIGN_IN_FAILURE,
+		payload: { error: 'invalid username or password' },
+	});
+	// }
 }
 
 /*
@@ -74,7 +72,6 @@ export function reducer(state, action) {
 				...state,
 				signInPending: false,
 				signInError: null,
-				// userInfo: action.payload.data.username,
 				token: action.payload.data.token,
 			};
 

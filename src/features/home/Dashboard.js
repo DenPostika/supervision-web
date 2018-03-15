@@ -21,9 +21,8 @@ export class Dashboard extends Component {
 	state = {
 		cardId: null,
 		range: 'week',
-		checkInDate: moment(),
-		checkInStart: null,
-		checkInEnd: null,
+		dateCome: null,
+		dateLeave: null,
 	};
 	componentDidMount() {
 		this.props.actions.fetchUsers();
@@ -31,7 +30,6 @@ export class Dashboard extends Component {
 	}
 	selectUser = e => {
 		const { range } = this.state;
-		console.log(range);
 		this.props.actions.fetchTrackingList(
 			e.target.getAttribute('fval'),
 			getStartDate(range),
@@ -57,18 +55,30 @@ export class Dashboard extends Component {
 			);
 		}
 	};
-	handleDatePicker = date => {
-		this.setState({ checkInDate: date });
-	};
 	handleStart = date => {
-		this.setState({ checkInStart: date });
+		this.setState({ dateCome: date });
 	};
 	handleEnd = date => {
-		this.setState({ checkInEnd: date });
+		this.setState({ dateLeave: date });
 	};
 	submitCheckIn = e => {
 		e.preventDefault();
-		console.log('submit');
+		const { userInfo } = this.props;
+		const { dateCome, dateLeave } = this.state;
+		let cardId = null;
+		const come = dateCome !== null ? dateCome.format() : null;
+		const leave = dateLeave !== null ? dateLeave.format() : null;
+		if (userInfo.type === 'admin') {
+			cardId = this.state.cardId;
+		} else {
+			cardId = userInfo.cardId;
+		}
+		console.log('submit', { cardId, dateCome, dateLeave });
+		this.props.actions.updateTracking({
+			cardId,
+			dateCome: come,
+			dateLeave: leave,
+		});
 	};
 	handleSignOut = e => {
 		e.preventDefault();
@@ -112,12 +122,10 @@ export class Dashboard extends Component {
 							/>
 							<TrackList
 								list={trackingList}
-								handleDatePicker={this.handleDatePicker}
 								handleStart={this.handleStart}
 								handleEnd={this.handleEnd}
-								checkInDate={this.state.checkInDate}
-								checkInStart={this.state.checkInStart}
-								checkInEnd={this.state.checkInEnd}
+								checkInStart={this.state.dateCome}
+								checkInEnd={this.state.dateLeave}
 								handleSubmit={this.submitCheckIn}
 							/>
 						</main>

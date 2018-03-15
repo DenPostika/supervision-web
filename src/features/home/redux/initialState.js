@@ -5,6 +5,8 @@ const initialState = {
   fetchUsersError: null,
   fetchUserInfoPending: false,
   fetchUserInfoError: null,
+  updateTrackingPending: false,
+  updateTrackingError: null,
 };
 
 export default initialState;

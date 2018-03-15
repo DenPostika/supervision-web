@@ -23,7 +23,7 @@ export const separateDate = data => {
 export const filterlistById = (list = [], cardId) =>
 	list.filter(el => el.cardId === cardId);
 
-export const getDateRange = (range = 'week') => {
+export const getDateRange = range => {
 	const start = moment().startOf(range);
 	const end = moment().endOf(range);
 
@@ -34,7 +34,6 @@ export const getDateRange = (range = 'week') => {
 		days.push(moment(day).format('DD.MM.YYYY'));
 		day = day.clone().add(1, 'd');
 	}
-
 	return days;
 };
 export const getStartDate = range =>

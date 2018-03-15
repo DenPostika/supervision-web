@@ -2,11 +2,13 @@ import initialState from './initialState';
 import { reducer as fetchTrackingListReducer } from './fetchTrackingList';
 import { reducer as fetchUsersReducer } from './fetchUsers';
 import { reducer as fetchUserInfoReducer } from './fetchUserInfo';
+import { reducer as updateTrackingReducer } from './updateTracking';
 
 const reducers = [
   fetchTrackingListReducer,
   fetchUsersReducer,
   fetchUserInfoReducer,
+  updateTrackingReducer,
 ];
 
 export default function reducer(state = initialState, action) {

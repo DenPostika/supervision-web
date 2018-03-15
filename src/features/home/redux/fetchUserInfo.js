@@ -1,6 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import jwtDecode from 'jwt-decode';
-import { call, put, take } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import {
 	HOME_FETCH_USER_INFO_BEGIN,
 	HOME_FETCH_USER_INFO_SUCCESS,

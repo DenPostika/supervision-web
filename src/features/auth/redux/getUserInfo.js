@@ -12,7 +12,7 @@ export const getUserInfo = () => dispatch => {
 	if (localStorage.token) {
 		const today = moment();
 		const decoded = jwtDecode(localStorage.token);
-		if (moment(decoded.exp * 10000).isAfter(today)) {
+		if (moment(decoded.exp * 1000).isAfter(today)) {
 			userInfo = decoded;
 		} else {
 			delete localStorage.token;

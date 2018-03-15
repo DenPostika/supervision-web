@@ -48,10 +48,8 @@ export default class TrackList extends Component {
 	render() {
 		const {
 			list,
-			handleDatePicker,
 			handleStart,
 			handleEnd,
-			checkInDate,
 			handleSubmit,
 			checkInStart,
 			checkInEnd,
@@ -67,13 +65,7 @@ export default class TrackList extends Component {
 					</div>
 					{this.renderTrackList(list)}
 					<div className="manual_track list_row">
-						<div className="date">
-							<DatePicker
-								selected={checkInDate}
-								onChange={handleDatePicker}
-								dateFormat="DD.MM.YYYY"
-							/>
-						</div>
+						<div className="date">Manual</div>
 						<div className="start">
 							<DatePicker
 								selected={checkInStart}

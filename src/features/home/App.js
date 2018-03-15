@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import '../../styles/web-fonts-with-css/scss/fontawesome.scss';
+import '../../styles/web-fonts-with-css/scss/fa-solid.scss';
+import '../../styles/web-fonts-with-css/scss/fa-brands.scss';
 
 import { redirect } from '../common/redux/redirect';
 import { getUserInfo } from '../auth/redux/getUserInfo';
@@ -23,11 +26,9 @@ class App extends Component {
 		if (!checkAuth()) {
 			this.props.redirect('/auth/sign_in');
 		}
-		this.props.getUserInfo();
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.location !== prevProps.location) {
-			this.props.getUserInfo();
 			setAuthorizationToken(localStorage.token);
 		}
 	}
