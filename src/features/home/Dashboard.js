@@ -79,6 +79,11 @@ export class Dashboard extends Component {
 			dateCome: come,
 			dateLeave: leave,
 		});
+		// clear inputs
+		this.setState({
+			dateCome: null,
+			dateLeave: null,
+		});
 	};
 	handleSignOut = e => {
 		e.preventDefault();

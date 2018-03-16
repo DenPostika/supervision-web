@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import Button from '../common/Button';
+
 export default class TrackList extends Component {
 	static propTypes = {
 		list: PropTypes.arrayOf(PropTypes.object),
@@ -75,6 +77,8 @@ export default class TrackList extends Component {
 								timeIntervals={60}
 								dateFormat="HH:mm DD.MM.YYYY"
 								timeCaption="time"
+								isClearable
+								disabledKeyboardNavigation
 							/>
 						</div>
 						<div className="end">
@@ -86,10 +90,14 @@ export default class TrackList extends Component {
 								timeIntervals={60}
 								dateFormat="HH:mm DD.MM.YYYY"
 								timeCaption="time"
+								isClearable
+								disabledKeyboardNavigation
 							/>
 						</div>
 						<div className="total">
-							<button onClick={handleSubmit}>submit</button>
+							<Button onlyIcon onClick={handleSubmit}>
+								<i className="fas fa-check" />
+							</Button>
 						</div>
 					</div>
 					<div className="week_sum list_row">

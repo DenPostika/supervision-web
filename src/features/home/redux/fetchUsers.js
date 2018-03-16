@@ -8,6 +8,8 @@ import {
 	HOME_FETCH_USERS_DISMISS_ERROR,
 } from './constants';
 
+import request from '../../common/utils/request';
+
 export function fetchUsers() {
 	// If need to pass args to saga, pass it with the begin action.
 	return {
@@ -24,18 +26,20 @@ export function dismissFetchUsersError() {
 // worker Saga: will be fired on HOME_FETCH_USERS_BEGIN actions
 export function* doFetchUsers() {
 	// If necessary, use argument to receive the begin action with parameters.
-	const res = yield axios.get(`/api/users`);
-	if (res.hasOwnProperty('error')) {
-		yield put({
-			type: HOME_FETCH_USERS_FAILURE,
-			payload: { error: res.error },
+	if (axios.defaults.headers.token) {
+		const { res, err } = yield call(request, 'get', '/api/users');
+		if (err) {
+			return yield put({
+				type: HOME_FETCH_USERS_FAILURE,
+				payload: { error: res.error },
+			});
+		}
+		return yield put({
+			type: HOME_FETCH_USERS_SUCCESS,
+			payload: res.data,
 		});
-		return;
 	}
-	yield put({
-		type: HOME_FETCH_USERS_SUCCESS,
-		payload: res.data,
-	});
+	return false;
 	// Dispatch success action out of try/catch so that render errors are not catched.
 }
 

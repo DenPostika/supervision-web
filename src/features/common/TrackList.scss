@@ -59,3 +59,96 @@
     }
   }
 }
+.react-datepicker__input-container{
+  input{
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    outline: none;
+    font-size: 0.9em;
+    text-align: center;
+    color: #fff;
+  }
+  .react-datepicker__close-icon{
+    height: 30px;
+    width: 15px;
+    position: relative;
+    &::after{
+      position: absolute;
+      border-radius: 0;
+      left: 0;
+      top: -1px;
+      height: 30px;
+      bottom: initial;
+      margin: 0;
+      line-height: 25px;
+    }
+  }
+}
+.react-datepicker-popper{
+  .react-datepicker{
+    background-color: #414e60 20%;
+    background-image: radial-gradient(farthest-side ellipse at 10% 0, #414e60 20%, #94a3b1);
+    background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+    background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+    background-attachment: fixed, fixed;
+    color: inherit;
+  }
+  .react-datepicker__header{
+    background: transparent;
+    color: inherit;
+    border-radius: 0;
+    border: none;
+    .react-datepicker__current-month{
+      text-transform: uppercase;
+      color: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 25px;
+    }
+  }
+  .react-datepicker__month-container{
+  }
+  .react-datepicker__time-container{
+    height: 273px;
+    .react-datepicker__time{
+      background: transparent;
+    }
+    .react-datepicker-time__header{
+      text-transform: uppercase;
+      color: inherit;
+    }
+  }
+  .react-datepicker__day-name{
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+  }
+  .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{
+    color: inherit;
+    border-radius: 0;
+    margin: 0;
+    line-height: 40px;
+  }
+  .react-datepicker__navigation{
+    top: 14px;
+  }
+  .react-datepicker__month{
+    margin: 0;
+  }
+  .react-datepicker__week{
+    .react-datepicker__day{
+      width: 40px;
+      height: 40px;
+      &:hover{
+        background: rgba(51, 51, 51, 0.4);
+        border-radius: 0;
+      }
+    }
+  }
+}
+  .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before{
+    display: none;
+  }
