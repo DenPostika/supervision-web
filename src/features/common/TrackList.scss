@@ -148,6 +148,9 @@
       }
     }
   }
+  .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover{
+    background-color: rgba(51, 51, 51, 0.4);
+  }
 }
   .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before{
     display: none;
