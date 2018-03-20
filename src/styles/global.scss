@@ -8,6 +8,7 @@
 html, body, #react-root {
   height: 100%;
   font-size: 14px;
+  width: 100vw;
 }
 html{
   background-color: #414e60 20%;
@@ -80,6 +81,7 @@ h6 {
   padding: 15px;
   transition: all 0.2s ease;
   border-radius: 5px;
+  
   &.no-padding{
     padding: 0;
   }

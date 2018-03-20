@@ -12,8 +12,7 @@ export default class BarChart extends Component {
 		const values = range.map(el => {
 			if (dates.indexOf(el) >= 0) {
 				const ind = dates.indexOf(el);
-				const res = list[ind].worktime / 60;
-				return Math.round(res);
+				return list[ind].worktime / 60;
 			}
 			return 0;
 		});
@@ -37,10 +36,16 @@ export default class BarChart extends Component {
 	};
 	render() {
 		const { list, dateRange, handleDateFilter } = this.props;
+		const limit = Array(this.calcLabels(dateRange).length).fill(9);
 		const options = {
 			maintainAspectRatio: false,
 			legend: {
 				display: false,
+			},
+			elements: {
+				line: {
+					fill: false,
+				},
 			},
 			scales: {
 				xAxes: [
@@ -58,8 +63,28 @@ export default class BarChart extends Component {
 						gridLines: {
 							display: false,
 						},
+						type: 'linear',
+						id: 'y-axis-1',
 						ticks: {
 							fontColor: '#f2f2f295',
+							beginAtZero: true,
+							suggestedMax: 10,
+						},
+					},
+					{
+						gridLines: {
+							display: false,
+						},
+						type: 'linear',
+						id: 'y-axis-2',
+						ticks: {
+							fontColor: '#f2f2f295',
+							beginAtZero: true,
+							suggestedMax: 10,
+							display: false,
+						},
+						tooltips: {
+							mode: false,
 						},
 					},
 				],
@@ -70,15 +95,60 @@ export default class BarChart extends Component {
 			datasets: [
 				{
 					label: 'hours',
+					type: 'bar',
+					fill: false,
 					backgroundColor: '#607D9A',
 					borderColor: '#6495C7',
 					borderWidth: 1,
 					hoverBackgroundColor: '#3b6c9d91',
 					hoverBorderColor: '#315A8C',
 					data: this.calcValues(list, dateRange),
+					yAxisID: 'y-axis-1',
+				},
+				{
+					label: 'limit',
+					type: 'line',
+					data: limit,
+					fill: false,
+					borderColor: '#EC932F',
+					backgroundColor: 'transparent',
+					pointBorderColor: 'transparent',
+					pointBackgroundColor: 'transparent',
+					pointHoverBackgroundColor: 'transparent',
+					pointHoverBorderColor: 'transparent',
+					yAxisID: 'y-axis-2',
 				},
 			],
 		};
+		// const data = {
+		// 	// labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		// 	datasets: [
+		// 		{
+		// 			label: 'Sales',
+		// 			type: 'line',
+		// 			data: [9],
+		// 			fill: false,
+		// 			borderColor: '#EC932F',
+		// 			backgroundColor: '#EC932F',
+		// 			pointBorderColor: '#EC932F',
+		// 			pointBackgroundColor: '#EC932F',
+		// 			pointHoverBackgroundColor: '#EC932F',
+		// 			pointHoverBorderColor: '#EC932F',
+		// 			yAxisID: 'y-axis-2',
+		// 		},
+		// 		{
+		// 			type: 'bar',
+		// 			label: 'Visitor',
+		// 			data: [200, 185, 590, 621, 250, 400, 95],
+		// 			fill: false,
+		// 			backgroundColor: '#71B37C',
+		// 			borderColor: '#71B37C',
+		// 			hoverBackgroundColor: '#71B37C',
+		// 			hoverBorderColor: '#71B37C',
+		// 			yAxisID: 'y-axis-1',
+		// 		},
+		// 	],
+		// };
 		return (
 			<div className="common-bar-chart chart_wrap box ">
 				<div className="filter">

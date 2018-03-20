@@ -10,10 +10,10 @@ import authReducer from '../features/auth/redux/reducer';
 // So that it's easy for others to understand it and Rekit could manage theme.
 
 const reducerMap = {
-  router: routerReducer,
-  home: homeReducer,
-  common: commonReducer,
-  auth: authReducer,
+	router: routerReducer,
+	home: homeReducer,
+	common: commonReducer,
+	auth: authReducer,
 };
 
 export default combineReducers(reducerMap);

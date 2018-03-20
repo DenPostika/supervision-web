@@ -9,6 +9,7 @@ import {
 } from './constants';
 import request from '../../common/utils/request';
 import { fetchTrackingList } from './fetchTrackingList';
+import { fetchUsers } from './fetchUsers';
 
 export function fetchUserInfo() {
 	// If need to pass args to saga, pass it with the begin action.
@@ -34,7 +35,11 @@ export function* doFetchUserInfo(type, data) {
 	// const res = yield axios.get(`/api/users/${userId}`);
 	const { res, err } = yield call(request, 'get', `/api/users/${payload}`);
 	if (res) {
-		yield put(fetchTrackingList(res.data.cardId));
+		if (res.data.type === 'admin') {
+			yield put(fetchUsers());
+		} else {
+			yield put(fetchTrackingList(res.data.cardId));
+		}
 		yield put({
 			type: HOME_FETCH_USER_INFO_SUCCESS,
 			payload: res.data,

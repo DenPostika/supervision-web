@@ -33,8 +33,8 @@ export default function configureStore(initialState) {
 		compose(applyMiddleware(...middlewares), devToolsExtension),
 	);
 
-    /* init saga */
-    sagaMiddleware.run(rootSaga);
+	/* init saga */
+	sagaMiddleware.run(rootSaga);
 
 	/* istanbul ignore if  */
 	if (module.hot) {

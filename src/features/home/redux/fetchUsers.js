@@ -26,12 +26,12 @@ export function dismissFetchUsersError() {
 // worker Saga: will be fired on HOME_FETCH_USERS_BEGIN actions
 export function* doFetchUsers() {
 	// If necessary, use argument to receive the begin action with parameters.
-	if (axios.defaults.headers.token) {
+	if (axios.defaults.headers.token !== null || axios.defaults.headers.token) {
 		const { res, err } = yield call(request, 'get', '/api/users');
 		if (err) {
 			return yield put({
 				type: HOME_FETCH_USERS_FAILURE,
-				payload: { error: res.error },
+				payload: { error: err },
 			});
 		}
 		return yield put({
@@ -76,7 +76,7 @@ export function reducer(state, action) {
 			return {
 				...state,
 				fetchUsersPending: false,
-				fetchUsersError: action.data.error,
+				fetchUsersError: action.error,
 			};
 
 		case HOME_FETCH_USERS_DISMISS_ERROR:

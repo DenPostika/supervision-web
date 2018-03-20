@@ -77,7 +77,6 @@ export function* startTask() {
 			yield put({ type: 'WEBSOCKET_START_TASK' });
 		}
 	} catch (err) {
-		console.log(err);
 		yield put({
 			type: AUTH_WAIT_CARD_FAILURE,
 			data: { error: err },

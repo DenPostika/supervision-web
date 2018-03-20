@@ -55,9 +55,19 @@ export default class TrackList extends Component {
 			handleSubmit,
 			checkInStart,
 			checkInEnd,
+			updateErr,
+			userType,
+			userList = [],
+			selectedCard,
 		} = this.props;
+		const temp = userList.filter(el => el.cardId === selectedCard);
+		const [selected = null] = temp;
 		return (
 			<div className="common-track-list">
+				{userType === 'admin' &&
+					selected !== null && (
+						<h5 className="title">{selected.username}</h5>
+					)}
 				<div className="list_wrap box no-padding">
 					<div className="list_head list_row">
 						<div className="date">date</div>
@@ -66,40 +76,47 @@ export default class TrackList extends Component {
 						<div className="total">work time</div>
 					</div>
 					{this.renderTrackList(list)}
-					<div className="manual_track list_row">
-						<div className="date">Manual</div>
-						<div className="start">
-							<DatePicker
-								selected={checkInStart}
-								onChange={handleStart}
-								showTimeSelect
-								timeFormat="HH:mm"
-								timeIntervals={60}
-								dateFormat="HH:mm DD.MM.YYYY"
-								timeCaption="time"
-								isClearable
-								disabledKeyboardNavigation
-							/>
+					{userType === 'admin' && (
+						<div className="manual_track list_row">
+							<div className="date">Manual</div>
+							<div className="start">
+								<DatePicker
+									selected={checkInStart}
+									onChange={handleStart}
+									showTimeSelect
+									timeFormat="HH:mm"
+									timeIntervals={60}
+									dateFormat="HH:mm DD.MM.YYYY"
+									timeCaption="time"
+									placeholderText="HH:mm DD.MM.YYYY"
+									isClearable
+									disabledKeyboardNavigation
+								/>
+							</div>
+							<div className="end">
+								<DatePicker
+									selected={checkInEnd}
+									onChange={handleEnd}
+									showTimeSelect
+									timeFormat="HH:mm"
+									timeIntervals={60}
+									dateFormat="HH:mm DD.MM.YYYY"
+									timeCaption="time"
+									placeholderText="HH:mm DD.MM.YYYY"
+									isClearable
+									disabledKeyboardNavigation
+								/>
+							</div>
+							<div className="total">
+								<Button onlyIcon onClick={handleSubmit}>
+									<i className="fas fa-check" />
+								</Button>
+							</div>
 						</div>
-						<div className="end">
-							<DatePicker
-								selected={checkInEnd}
-								onChange={handleEnd}
-								showTimeSelect
-								timeFormat="HH:mm"
-								timeIntervals={60}
-								dateFormat="HH:mm DD.MM.YYYY"
-								timeCaption="time"
-								isClearable
-								disabledKeyboardNavigation
-							/>
-						</div>
-						<div className="total">
-							<Button onlyIcon onClick={handleSubmit}>
-								<i className="fas fa-check" />
-							</Button>
-						</div>
-					</div>
+					)}
+					{updateErr && (
+						<div className="list_row err">{updateErr}</div>
+					)}
 					<div className="week_sum list_row">
 						<div className="date">summary</div>
 						<div className="in" />

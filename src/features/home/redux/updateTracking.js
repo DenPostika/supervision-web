@@ -26,9 +26,7 @@ export function dismissUpdateTrackingError() {
 // worker Saga: will be fired on HOME_UPDATE_TRACKING_BEGIN actions
 export function* doUpdateTracking(type, data) {
 	const { payload } = data;
-	console.log(payload);
 	const { res, err } = yield call(request, 'post', `/api/tracking`, payload);
-	console.log(res, err);
 	if (err) {
 		return yield put({
 			type: HOME_UPDATE_TRACKING_FAILURE,

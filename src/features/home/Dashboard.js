@@ -23,10 +23,16 @@ export class Dashboard extends Component {
 		range: 'week',
 		dateCome: null,
 		dateLeave: null,
+		updateErr: null,
 	};
 	componentDidMount() {
-		this.props.actions.fetchUsers();
 		this.props.actions.fetchUserInfo();
+	}
+	componentWillReceiveProps() {
+		this.setState({
+			dateCome: null,
+			dateLeave: null,
+		});
 	}
 	selectUser = e => {
 		const { range } = this.state;
@@ -61,6 +67,17 @@ export class Dashboard extends Component {
 	handleEnd = date => {
 		this.setState({ dateLeave: date });
 	};
+	validateCheckingDate = (come, leave) => {
+		if (come !== null && leave !== null) {
+			if (
+				moment(come).format('DD.MM.YYYY') !==
+				moment(leave).format('DD.MM.YYYY')
+			) {
+				return false;
+			}
+		}
+		return true;
+	};
 	submitCheckIn = e => {
 		e.preventDefault();
 		const { userInfo } = this.props;
@@ -73,17 +90,16 @@ export class Dashboard extends Component {
 		} else {
 			cardId = userInfo.cardId;
 		}
-		console.log('submit', { cardId, dateCome, dateLeave });
-		this.props.actions.updateTracking({
-			cardId,
-			dateCome: come,
-			dateLeave: leave,
-		});
-		// clear inputs
-		this.setState({
-			dateCome: null,
-			dateLeave: null,
-		});
+		if (this.validateCheckingDate(come, leave)) {
+			this.setState({ updateErr: null });
+			this.props.actions.updateTracking({
+				cardId,
+				dateCome: come,
+				dateLeave: leave,
+			});
+		} else {
+			this.setState({ updateErr: 'you can choose a range of one day' });
+		}
 	};
 	handleSignOut = e => {
 		e.preventDefault();
@@ -132,6 +148,10 @@ export class Dashboard extends Component {
 								checkInStart={this.state.dateCome}
 								checkInEnd={this.state.dateLeave}
 								handleSubmit={this.submitCheckIn}
+								updateErr={this.state.updateErr}
+								userType={userInfo.type}
+								selectedCard={this.state.cardId}
+								userList={users}
 							/>
 						</main>
 						{/* <footer className="box footer">footer</footer> */}
