@@ -2,8 +2,7 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 export default {
-  path: 'common',
-  name: 'Common',
-  childRoutes: [
-  ],
+	path: 'common',
+	name: 'Common',
+	childRoutes: [],
 };

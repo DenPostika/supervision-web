@@ -12,7 +12,7 @@ export default class BarChart extends Component {
 		const values = range.map(el => {
 			if (dates.indexOf(el) >= 0) {
 				const ind = dates.indexOf(el);
-				return list[ind].worktime / 60;
+				return (list[ind].worktime / 60).toFixed(2);
 			}
 			return 0;
 		});
@@ -29,15 +29,19 @@ export default class BarChart extends Component {
 			case 'month':
 				format = 'DD';
 				break;
+			case 'quarter':
+				format = 'MMM';
+				break;
 			default:
 				format = 'ddd';
 		}
 		return range.map(el => moment(el, 'DD.MM.YYYY').format(format));
 	};
 	render() {
-		const { list, dateRange, handleDateFilter } = this.props;
+		const { list, dateRange, handleDateFilter, filter } = this.props;
 		const limit = Array(this.calcLabels(dateRange).length).fill(9);
 		const options = {
+			chartArea: { backgroundColor: '#f0f0f0' },
 			maintainAspectRatio: false,
 			legend: {
 				display: false,
@@ -53,9 +57,6 @@ export default class BarChart extends Component {
 						gridLines: {
 							display: false,
 						},
-						ticks: {
-							fontColor: '#f2f2f295',
-						},
 					},
 				],
 				yAxes: [
@@ -66,21 +67,23 @@ export default class BarChart extends Component {
 						type: 'linear',
 						id: 'y-axis-1',
 						ticks: {
-							fontColor: '#f2f2f295',
 							beginAtZero: true,
-							suggestedMax: 10,
+							suggestedMax: 12,
+							callback(value) {
+								return `${value} h`;
+							},
 						},
 					},
 					{
 						gridLines: {
 							display: false,
 						},
+						display: false,
 						type: 'linear',
 						id: 'y-axis-2',
 						ticks: {
-							fontColor: '#f2f2f295',
 							beginAtZero: true,
-							suggestedMax: 10,
+							suggestedMax: 12,
 							display: false,
 						},
 						tooltips: {
@@ -97,8 +100,8 @@ export default class BarChart extends Component {
 					label: 'hours',
 					type: 'bar',
 					fill: false,
-					backgroundColor: '#607D9A',
-					borderColor: '#6495C7',
+					backgroundColor: '#6CA6E0',
+					borderColor: '#778289',
 					borderWidth: 1,
 					hoverBackgroundColor: '#3b6c9d91',
 					hoverBorderColor: '#315A8C',
@@ -110,7 +113,8 @@ export default class BarChart extends Component {
 					type: 'line',
 					data: limit,
 					fill: false,
-					borderColor: '#EC932F',
+					borderColor: '#10a118',
+					borderWidth: 2,
 					backgroundColor: 'transparent',
 					pointBorderColor: 'transparent',
 					pointBackgroundColor: 'transparent',
@@ -120,35 +124,30 @@ export default class BarChart extends Component {
 				},
 			],
 		};
-		// const data = {
-		// 	// labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-		// 	datasets: [
-		// 		{
-		// 			label: 'Sales',
-		// 			type: 'line',
-		// 			data: [9],
-		// 			fill: false,
-		// 			borderColor: '#EC932F',
-		// 			backgroundColor: '#EC932F',
-		// 			pointBorderColor: '#EC932F',
-		// 			pointBackgroundColor: '#EC932F',
-		// 			pointHoverBackgroundColor: '#EC932F',
-		// 			pointHoverBorderColor: '#EC932F',
-		// 			yAxisID: 'y-axis-2',
-		// 		},
-		// 		{
-		// 			type: 'bar',
-		// 			label: 'Visitor',
-		// 			data: [200, 185, 590, 621, 250, 400, 95],
-		// 			fill: false,
-		// 			backgroundColor: '#71B37C',
-		// 			borderColor: '#71B37C',
-		// 			hoverBackgroundColor: '#71B37C',
-		// 			hoverBorderColor: '#71B37C',
-		// 			yAxisID: 'y-axis-1',
-		// 		},
-		// 	],
-		// };
+		const plugin = [
+			{
+				beforeDraw(chart) {
+					if (
+						chart.config.options.chartArea &&
+						chart.config.options.chartArea.backgroundColor
+					) {
+						const { ctx } = chart.chart;
+						const { chartArea } = chart;
+
+						ctx.save();
+						ctx.fillStyle =
+							chart.config.options.chartArea.backgroundColor;
+						ctx.fillRect(
+							chartArea.left,
+							chartArea.top,
+							chartArea.right - chartArea.left,
+							chartArea.bottom - chartArea.top,
+						);
+						ctx.restore();
+					}
+				},
+			},
+		];
 		return (
 			<div className="common-bar-chart chart_wrap box ">
 				<div className="filter">
@@ -156,22 +155,31 @@ export default class BarChart extends Component {
 						id="week"
 						value="week"
 						name="dateFilter"
+						checked={filter === 'week' && true}
 						onChange={handleDateFilter}
 					/>
 					<RadioInput
 						id="month"
 						value="month"
 						name="dateFilter"
+						checked={filter === 'month' && true}
 						onChange={handleDateFilter}
 					/>
-					{/* <RadioInput */}
-					{/* id="quarter" */}
-					{/* value="quarter" */}
-					{/* name="dateFilter" */}
-					{/* onChange={handleDateFilter} */}
-					{/* /> */}
+					{/*<RadioInput*/}
+						{/*id="quarter"*/}
+						{/*value="quarter"*/}
+						{/*name="dateFilter"*/}
+						{/*checked={filter === 'quarter' && true}*/}
+						{/*onChange={handleDateFilter}*/}
+					{/*/>*/}
 				</div>
-				<Bar data={data} width={100} height={50} options={options} />
+				<Bar
+					data={data}
+					width={100}
+					height={50}
+					options={options}
+					plugins={plugin}
+				/>
 			</div>
 		);
 	}

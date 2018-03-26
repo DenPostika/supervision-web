@@ -1,7 +1,7 @@
 import { Dashboard } from './';
 
 export default {
-	path: '/dashboard',
+	path: 'dashboard',
 	name: 'Dashboard',
 	component: Dashboard,
 	isIndex: true,

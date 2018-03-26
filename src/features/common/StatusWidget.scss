@@ -7,9 +7,9 @@
   .userCard{
     border-radius: 5px;
     transition: background-color 0.2s ease-out;
-    margin-right: 5px;
+    margin: 5px;
     position: relative;
-    background: #000;
+    background: #eee;
     .box-header{
       margin: 0;
       border-radius: 5px;
@@ -18,6 +18,10 @@
         padding: 0;
         border: none;
         font-size: 0.8em;
+        color: inherit;
+        &:hover{
+          background: inherit;
+        }
       }
       & > * {
         pointer-events: none;
@@ -36,7 +40,6 @@
     .user_name{
       padding: 0 10px;
       text-transform: capitalize;
-      color: #2DB7FA;
     }
     .user_status{
       background: #999999;
@@ -58,12 +61,10 @@
       left: 0;
       width: 250px;
       opacity: 0;
-      border: 2px solid rgba(51, 51, 51, 0.3);
       font-weight: 300;
       z-index: 5;
       margin: 0;
       border-radius: 5px;
-      background: #000;
       height: 60px;
       & > * {
         display: flex;

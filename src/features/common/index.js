@@ -5,3 +5,6 @@ export { default as BarChart } from './BarChart';
 export { default as TrackList } from './TrackList';
 export { default as StatusWidget } from './StatusWidget';
 export { default as RadioInput } from './RadioInput';
+export { default as Header } from './Header';
+export { default as Sidebar } from './Sidebar';
+export { default as PageNotFound } from './PageNotFound';

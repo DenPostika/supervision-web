@@ -6,8 +6,10 @@ import '../../styles/web-fonts-with-css/scss/fa-solid.scss';
 import '../../styles/web-fonts-with-css/scss/fa-brands.scss';
 
 import { redirect } from '../common/redux/redirect';
-import { getUserInfo } from '../auth/redux/getUserInfo';
+import Header from '../common/Header';
+import Sidebar from '../common/Sidebar';
 import checkAuth from '../auth/utils/checkAuth';
+import { signOut } from '../auth/redux/signOut';
 import { setAuthorizationToken } from '../../configDefaultAPI';
 /*
   This is the root component of your app. Here you define the overall layout
@@ -32,8 +34,25 @@ class App extends Component {
 			setAuthorizationToken(localStorage.token);
 		}
 	}
+	handleSignOut = e => {
+		e.preventDefault();
+		this.props.signOut();
+	};
 	render() {
-		return <div className="home-app">{this.props.children}</div>;
+		const { userInfo = {} } = this.props;
+		return (
+			<div className="home-app">
+				{checkAuth() && [
+					<Header
+						key="header"
+						userInfo={userInfo}
+						handleSignOut={this.handleSignOut}
+					/>,
+					<Sidebar key="sidebar" />,
+				]}
+				{this.props.children}
+			</div>
+		);
 	}
 }
 
@@ -41,14 +60,14 @@ class App extends Component {
 function mapStateToProps(state) {
 	return {
 		token: state.auth.token,
-		userInfo: state.auth.userInfo,
+		userInfo: state.home.userInfo,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		redirect: path => redirect(path)(dispatch),
-		getUserInfo: () => getUserInfo()(dispatch),
+		signOut: () => signOut()(dispatch),
 	};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -13,18 +13,18 @@
       align-items: center;
       padding: 0 15px;
       height: 30px;
-      color: #d2d2d2;
+      //color: #d2d2d2;
       font-weight: 300;
       &.err{
         justify-content: center;
         color: #ff9900;
       }
       &:nth-child(odd){
-        background-color: rgba(51, 51, 51, 0.3);
-        border-top: 1px solid rgba(51, 51, 51, 0.35);
+        background-color: #f4f5f6;
+        //border-top: 1px solid rgba(51, 51, 51, 0.35);
       }
       & > *{
-        flex: 1 1 25%;
+        flex: 1 1 20%;
         text-align: center;
         color: inherit;
       }
@@ -33,18 +33,24 @@
         font-weight: bold;
       }
     }
-    .week_sum{
-      border-bottom: 2px solid #999;
-      border-top: 2px solid #ddd;
+    .week_sum, .overTime{
       font-weight: bold;
       letter-spacing: 1.2px;
-      color: #f2f2f2;
+    }
+    .week_sum{
       height: 40px;
     }
+    .status{
+      padding-left: 5px;
+      color: #999;
+      &.on{
+        color: #57b955;
+      }
+    }
     .list_head{
-      border-bottom: 2px solid #999;
-      text-transform: uppercase;
-      color: #f2f2f2;
+      //border-bottom: 2px solid #999;
+      text-transform: capitalize;
+      //color: #f2f2f2;
       font-weight: bold;
       letter-spacing: 1.2px;
       height: 40px;
@@ -69,12 +75,10 @@
 .react-datepicker__input-container{
   input{
     height: 30px;
-    background: rgba(255,255,255,0.3);
     border: none;
     outline: none;
     font-size: 0.9em;
     text-align: center;
-    color: #fff;
     &::placeholder{
       color: inherit;
     }
@@ -84,11 +88,15 @@
     width: 15px;
     position: relative;
     &::after{
+      content: '';
+      font-family: 'Font Awesome 5 Free';
       position: absolute;
       border-radius: 0;
-      left: 0;
-      top: -1px;
-      height: 30px;
+      color: #6CA6E0;
+      background: transparent;
+      //left: 0;
+      top: 0;
+      //height: 30px;
       bottom: initial;
       margin: 0;
       line-height: 25px;
@@ -97,11 +105,7 @@
 }
 .react-datepicker-popper{
   .react-datepicker{
-    background-color: #414e60 20%;
-    background-image: radial-gradient(farthest-side ellipse at 10% 0, #414e60 20%, #94a3b1);
-    background-image: -webkit-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
-    background-image: -moz-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
-    background-attachment: fixed, fixed;
+    background-color: #f4f5f6;
     color: inherit;
   }
   .react-datepicker__header{
@@ -122,6 +126,10 @@
     height: 273px;
     .react-datepicker__time{
       background: transparent;
+      .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected{
+        background: #6CA6E0;
+        color: #656565;
+      }
     }
     .react-datepicker-time__header{
       text-transform: uppercase;
@@ -150,14 +158,23 @@
     .react-datepicker__day{
       width: 40px;
       height: 40px;
+      &--selected{
+        background: #6CA6E0;
+      }
       &:hover{
-        background: rgba(51, 51, 51, 0.4);
+        background: #eeeeee;
+        font-weight: bold;
         border-radius: 0;
       }
     }
   }
+  .react-datepicker__day--keyboard-selected{
+    background: #6CA6E0;
+  }
   .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover{
-    background-color: rgba(51, 51, 51, 0.4);
+    background-color: #eee;
+    font-weight: bold;
+    width: 99%;
   }
 }
   .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle::before,
@@ -178,10 +195,6 @@
       .react-datepicker__day{
         width: 25px;
         height: 25px;
-        &:hover{
-          background: rgba(51, 51, 51, 0.4);
-          border-radius: 0;
-        }
       }
     }
     .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{

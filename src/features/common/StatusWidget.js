@@ -9,6 +9,7 @@ export default class StatusWidget extends Component {
 				<button
 					className="btn box-header"
 					fval={user.cardId}
+					username={user.username}
 					onClick={this.props.selectUser}
 					role="button"
 				>
@@ -20,7 +21,7 @@ export default class StatusWidget extends Component {
 					</div>
 				</button>
 				<div className="box-content">
-					<div className="info">
+					<div className="info box">
 						<span className="phone">
 							tel:
 							<a

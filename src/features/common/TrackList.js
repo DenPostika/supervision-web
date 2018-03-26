@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { WORKDAY } from '../../configConst';
 
 import Button from '../common/Button';
 
@@ -25,7 +26,15 @@ export default class TrackList extends Component {
 		const hours = (minutes - rest) / 60;
 		return `${hours}h ${rest}m`;
 	};
-
+	calcOverTime = (sum, length) => {
+		const plan = WORKDAY * length * 60;
+		const res = sum - plan;
+		return this.allocateTime(res);
+	};
+	calcCloseDays = list => {
+		const open = list.filter(el => el.lastCheckIn === null);
+		return list.length - open.length;
+	};
 	renderTrackList = (list = []) =>
 		list
 			.sort((a, b) =>
@@ -38,12 +47,22 @@ export default class TrackList extends Component {
 						{moment(item.comming).format('HH:mm')}
 					</div>
 					<div className="out">
-						{item.leaving
-							? moment(item.leaving).format('HH:mm')
+						{item.lastCheckIn
+							? moment(item.lastCheckIn).format('HH:mm')
 							: '--:--'}
 					</div>
 					<div className="total">
 						{this.allocateTime(item.worktime)}
+						{item.onwork && (
+							<i
+								className={`status ${item.onwork &&
+									'on'} fa fa-dot-circle`}
+							/>
+						)}
+					</div>
+					<div className="overTime">
+						{item.lastCheckIn &&
+							this.calcOverTime(item.worktime, 1)}
 					</div>
 				</div>
 			));
@@ -57,23 +76,21 @@ export default class TrackList extends Component {
 			checkInEnd,
 			updateErr,
 			userType,
-			userList = [],
-			selectedCard,
+			selectedUser,
 		} = this.props;
-		const temp = userList.filter(el => el.cardId === selectedCard);
-		const [selected = null] = temp;
 		return (
 			<div className="common-track-list">
 				{userType === 'admin' &&
-					selected !== null && (
-						<h5 className="title">{selected.username}</h5>
+					selectedUser !== null && (
+						<h5 className="title">{selectedUser}</h5>
 					)}
 				<div className="list_wrap box no-padding">
 					<div className="list_head list_row">
 						<div className="date">date</div>
 						<div className="in">has come</div>
-						<div className="out">gone home</div>
+						<div className="out">last checkin</div>
 						<div className="total">work time</div>
+						<div className="total">overtime</div>
 					</div>
 					{this.renderTrackList(list)}
 					{userType === 'admin' && (
@@ -112,6 +129,7 @@ export default class TrackList extends Component {
 									<i className="fas fa-check" />
 								</Button>
 							</div>
+							<div />
 						</div>
 					)}
 					{updateErr && (
@@ -119,10 +137,16 @@ export default class TrackList extends Component {
 					)}
 					<div className="week_sum list_row">
 						<div className="date">summary</div>
-						<div className="in" />
-						<div className="out" />
-						<div className="total">
+						<div />
+						<div />
+						<div className="value">
 							{this.allocateTime(this.sumTime(list))}
+						</div>
+						<div>
+							{this.calcOverTime(
+								this.sumTime(list),
+								this.calcCloseDays(list),
+							)}
 						</div>
 					</div>
 				</div>

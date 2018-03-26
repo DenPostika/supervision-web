@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import moment from 'moment';
 import * as actions from './redux/actions';
 
-import Button from '../common/Button';
 import Box from '../common/Box';
 import BarChart from '../common/BarChart';
 import TrackList from '../common/TrackList';
@@ -24,6 +23,7 @@ export class Dashboard extends Component {
 		dateCome: null,
 		dateLeave: null,
 		updateErr: null,
+		filter: 'week',
 	};
 	componentDidMount() {
 		this.props.actions.fetchUserInfo();
@@ -34,19 +34,23 @@ export class Dashboard extends Component {
 			dateLeave: null,
 		});
 	}
+	componentWillUnmount() {
+		// this.setState({ cardId: null });
+	}
 	selectUser = e => {
 		const { range } = this.state;
 		this.props.actions.fetchTrackingList(
 			e.target.getAttribute('fval'),
 			getStartDate(range),
 			getEndDate(range),
+			e.target.getAttribute('username'),
 		);
 		this.setState({ cardId: e.target.getAttribute('fval') });
 	};
 	handleDateFilter = e => {
 		const range = e.target.value;
 		const { type } = this.props.userInfo;
-		this.setState({ range });
+		this.setState({ range, filter: range });
 		if (type !== 'admin') {
 			this.props.actions.fetchTrackingList(
 				this.props.userInfo.cardId,
@@ -113,21 +117,6 @@ export class Dashboard extends Component {
 			<div className="home-dashboard">
 				<Box>
 					<div className="container">
-						<header className="box box-header">
-							<div className="left_part">
-								<h1 className="title">Dashboard</h1>
-							</div>
-							<div className="right_part">
-								<div className="user_menu">
-									<span className="userName">
-										{userInfo ? userInfo.username : ''}
-									</span>
-								</div>
-								<Button onlyIcon onClick={this.handleSignOut}>
-									<i className="fa fa-power-off" />
-								</Button>
-							</div>
-						</header>
 						<main className="box-content">
 							{userInfo && type === 'admin' ? (
 								<StatusWidget
@@ -140,6 +129,7 @@ export class Dashboard extends Component {
 								list={trackingList}
 								dateRange={range}
 								handleDateFilter={this.handleDateFilter}
+								filter={this.state.filter}
 							/>
 							<TrackList
 								list={trackingList}
@@ -150,11 +140,12 @@ export class Dashboard extends Component {
 								handleSubmit={this.submitCheckIn}
 								updateErr={this.state.updateErr}
 								userType={userInfo.type}
-								selectedCard={this.state.cardId}
+								selectedUser={this.props.selectedUser}
 								userList={users}
 							/>
 						</main>
 						{/* <footer className="box footer">footer</footer> */}
+						{this.props.children}
 					</div>
 				</Box>
 			</div>
@@ -169,6 +160,7 @@ function mapStateToProps(state) {
 		userInfo: state.home.userInfo,
 		trackingList: state.home.trackingList,
 		users: state.home.users,
+		selectedUser: state.home.selectedUser,
 	};
 }
 

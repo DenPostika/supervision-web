@@ -1,0 +1,35 @@
+@import '../../styles/mixins';
+
+.common-sidebar {
+  position: fixed;
+  left: 0;
+  top: 50px;
+  background: #fff;
+  height: calc(100vh - 50px);
+  width: 250px;
+  overflow: hidden;
+  border-right: 1px solid #cfdbe2;
+  .nav_wrap{
+    background: #fcfcfc;
+    .nav_menu{
+      display: flex;
+      flex-direction: column;
+      .menu_item{
+        display: flex;
+        padding: 10px;
+        color: #515253;
+        text-transform: capitalize;
+        border-left: 3px solid transparent;
+        &.active, &:hover{
+          color: #6CA6E0;
+          background: #fcfcfc;
+          cursor: pointer;
+          border-left: 3px solid;
+        }
+        i {
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}

@@ -2,23 +2,4 @@
 
 .home-dashboard {
   height: 100%;
-  .box-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .right_part{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .user_menu{
-        .userName{
-          color: #f2f2f2;
-          font-weight: 300;
-        }
-      }
-      & > * {
-        margin: 0 5px;
-      }
-    }
-  }
 }

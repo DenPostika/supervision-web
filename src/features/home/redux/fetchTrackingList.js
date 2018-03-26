@@ -13,8 +13,9 @@ export function fetchTrackingList(
 	cardId,
 	dateStart = 0,
 	dateEnd = moment().format('YYYY-MM-DD'),
+	username = null,
 ) {
-	const data = { cardId, dateStart, dateEnd };
+	const data = { cardId, dateStart, dateEnd, username };
 	return {
 		type: HOME_FETCH_TRACKING_LIST_BEGIN,
 		payload: data,
@@ -67,6 +68,7 @@ export function reducer(state, action) {
 				...state,
 				fetchTrackingListPending: true,
 				fetchTrackingListError: null,
+				selectedUser: action.payload.username,
 			};
 
 		case HOME_FETCH_TRACKING_LIST_SUCCESS:

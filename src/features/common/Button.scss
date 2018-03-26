@@ -2,14 +2,14 @@
 
 .btn {
   border-radius: 10px;
-  border: solid 2px #8999b7;
+  border: solid 2px;
   text-transform: uppercase;
   padding: 12px 15px;
   font-size: 0.715rem;
   font-weight: bold;
   letter-spacing: 1.5px;
   text-align: center;
-  color: #8999b7;
+  color: #5d9cec;
   transition: all 0.2s ease;
   outline: none;
   background: transparent;
@@ -22,12 +22,16 @@
     padding: 3px;
     &:hover{
       color: #4ebfbb;
+      background: inherit;
+      i{
+        color: revert;
+      }
     }
   }
   &:active,
   &:hover{
     cursor: pointer;
-    color: #4ebfbb;
-    border-color: #4ebfbb;
+    background: #5d9cec;
+    color: #fff;
   }
 }
