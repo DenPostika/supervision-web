@@ -1,7 +1,7 @@
 import { takeEvery } from 'redux-saga';
 import { put } from 'redux-saga/effects';
 import axios from 'axios/index';
-import moment from 'moment';
+
 import {
 	HOME_FETCH_TRACKING_LIST_BEGIN,
 	HOME_FETCH_TRACKING_LIST_SUCCESS,
@@ -9,10 +9,12 @@ import {
 	HOME_FETCH_TRACKING_LIST_DISMISS_ERROR,
 } from './constants';
 
+import { getEndDate, getStartDate } from '../../common/utils/tracking';
+
 export function fetchTrackingList(
 	cardId,
-	dateStart = 0,
-	dateEnd = moment().format('YYYY-MM-DD'),
+	dateStart = getStartDate('week'),
+	dateEnd = getEndDate('week'),
 	username = null,
 ) {
 	const data = { cardId, dateStart, dateEnd, username };
@@ -69,6 +71,7 @@ export function reducer(state, action) {
 				fetchTrackingListPending: true,
 				fetchTrackingListError: null,
 				selectedUser: action.payload.username,
+				selectedCardId: action.payload.cardId,
 			};
 
 		case HOME_FETCH_TRACKING_LIST_SUCCESS:

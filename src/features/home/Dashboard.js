@@ -18,12 +18,10 @@ export class Dashboard extends Component {
 		actions: PropTypes.object.isRequired,
 	};
 	state = {
-		cardId: null,
 		range: 'week',
 		dateCome: null,
 		dateLeave: null,
 		updateErr: null,
-		filter: 'week',
 	};
 	componentDidMount() {
 		this.props.actions.fetchUserInfo();
@@ -39,18 +37,21 @@ export class Dashboard extends Component {
 	}
 	selectUser = e => {
 		const { range } = this.state;
+		const start = Array.isArray(range) ? range[0] : getStartDate(range);
+		const end = Array.isArray(range) ? range[1] : getEndDate(range);
 		this.props.actions.fetchTrackingList(
 			e.target.getAttribute('fval'),
-			getStartDate(range),
-			getEndDate(range),
+			start,
+			end,
 			e.target.getAttribute('username'),
 		);
-		this.setState({ cardId: e.target.getAttribute('fval') });
+		// this.setState({ cardId: e.target.getAttribute('fval') });
 	};
 	handleDateFilter = e => {
 		const range = e.target.value;
 		const { type } = this.props.userInfo;
-		this.setState({ range, filter: range });
+		const { selectedUser, selectedCardId } = this.props;
+		this.setState({ range });
 		if (type !== 'admin') {
 			this.props.actions.fetchTrackingList(
 				this.props.userInfo.cardId,
@@ -59,9 +60,48 @@ export class Dashboard extends Component {
 			);
 		} else {
 			this.props.actions.fetchTrackingList(
-				this.state.cardId,
+				selectedCardId,
 				getStartDate(range),
 				getEndDate(range),
+				selectedUser,
+			);
+		}
+	};
+	selectDaysRange = (startDate, endDate) => {
+		this.setState({ range: [startDate, endDate] });
+		const { type } = this.props.userInfo;
+		const { selectedUser, selectedCardId } = this.props;
+		if (type !== 'admin') {
+			this.props.actions.fetchTrackingList(
+				this.props.userInfo.cardId,
+				startDate,
+				endDate,
+			);
+		} else {
+			this.props.actions.fetchTrackingList(
+				selectedCardId,
+				startDate,
+				endDate,
+				selectedUser,
+			);
+		}
+	};
+	resetDaysRange = () => {
+		this.setState({ range: 'week' });
+		const { type } = this.props.userInfo;
+		const { selectedUser, selectedCardId } = this.props;
+		if (type !== 'admin') {
+			this.props.actions.fetchTrackingList(
+				this.props.userInfo.cardId,
+				getStartDate('week'),
+				getEndDate('week'),
+			);
+		} else {
+			this.props.actions.fetchTrackingList(
+				selectedCardId,
+				getStartDate('week'),
+				getEndDate('week'),
+				selectedUser,
 			);
 		}
 	};
@@ -84,13 +124,13 @@ export class Dashboard extends Component {
 	};
 	submitCheckIn = e => {
 		e.preventDefault();
-		const { userInfo } = this.props;
+		const { userInfo, selectedCardId } = this.props;
 		const { dateCome, dateLeave } = this.state;
 		let cardId = null;
 		const come = dateCome !== null ? dateCome.format() : null;
 		const leave = dateLeave !== null ? dateLeave.format() : null;
 		if (userInfo.type === 'admin') {
-			cardId = this.state.cardId;
+			cardId = selectedCardId;
 		} else {
 			cardId = userInfo.cardId;
 		}
@@ -129,7 +169,9 @@ export class Dashboard extends Component {
 								list={trackingList}
 								dateRange={range}
 								handleDateFilter={this.handleDateFilter}
-								filter={this.state.filter}
+								filter={range}
+								selectDaysRange={this.selectDaysRange}
+								resetDaysRange={this.resetDaysRange}
 							/>
 							<TrackList
 								list={trackingList}
@@ -161,6 +203,7 @@ function mapStateToProps(state) {
 		trackingList: state.home.trackingList,
 		users: state.home.users,
 		selectedUser: state.home.selectedUser,
+		selectedCardId: state.home.selectedCardId,
 	};
 }
 

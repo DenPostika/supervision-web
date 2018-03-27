@@ -20,12 +20,16 @@ export default class Sidebar extends Component {
 							</NavLink>
 						</li>
 						<li className="menu_item_wrap">
-							<NavLink to="/users/face_detection" className="menu_item">
-								<i className="fa fa-users" />Users
+							<NavLink
+								to="/users/face_detection"
+								className="menu_item"
+							>
+								<i className="fa fa-camera-retro" />face
+								detection
 							</NavLink>
 						</li>
 						<li className="menu_item_wrap">
-							<NavLink to="/user/profile" className="menu_item">
+							<NavLink to="/users/profile" className="menu_item">
 								<i className="fa fa-user" />Profile
 							</NavLink>
 						</li>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { Profile } from 'src/features/user/Profile';
+import { Profile } from 'src/features/users/Profile';
 
-describe('user/Profile', () => {
+describe('users/Profile', () => {
   it('renders node with correct class name', () => {
     const props = {
       user: {},
@@ -14,7 +14,7 @@ describe('user/Profile', () => {
     );
 
     expect(
-      renderedComponent.find('.user-profile').getElement()
+      renderedComponent.find('.users-profile').getElement()
     ).to.exist;
   });
 });

@@ -8,3 +8,4 @@ export { default as RadioInput } from './RadioInput';
 export { default as Header } from './Header';
 export { default as Sidebar } from './Sidebar';
 export { default as PageNotFound } from './PageNotFound';
+export { default as DaysPickerRange } from './DaysPickerRange';

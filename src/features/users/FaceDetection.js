@@ -13,7 +13,9 @@ export class FaceDetection extends Component {
 	render() {
 		return (
 			<div className="users-face-detection">
-				<div className="container">Page Content: users/DefaultPage</div>
+				<div className="container">
+					Page Content: users/Face detection
+				</div>
 			</div>
 		);
 	}

@@ -3,6 +3,7 @@ import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
 import { getDateRange } from './utils/tracking';
 import RadioInput from './RadioInput';
+import DaysPickerRange from './DaysPickerRange';
 
 export default class BarChart extends Component {
 	static propTypes = {};
@@ -21,16 +22,20 @@ export default class BarChart extends Component {
 	};
 	calcLabels = dateRange => {
 		const range = getDateRange(dateRange);
+
 		let format = '';
-		switch (dateRange) {
-			case 'week':
+		switch (true) {
+			case dateRange === 'week':
 				format = 'ddd';
 				break;
-			case 'month':
+			case dateRange === 'month':
 				format = 'DD';
 				break;
-			case 'quarter':
+			case dateRange === 'quarter':
 				format = 'MMM';
+				break;
+			case Array.isArray(dateRange):
+				format = 'DD.MM';
 				break;
 			default:
 				format = 'ddd';
@@ -151,6 +156,10 @@ export default class BarChart extends Component {
 		return (
 			<div className="common-bar-chart chart_wrap box ">
 				<div className="filter">
+					<DaysPickerRange
+						selectDaysRange={this.props.selectDaysRange}
+						resetDaysRange={this.props.resetDaysRange}
+					/>
 					<RadioInput
 						id="week"
 						value="week"
@@ -165,13 +174,13 @@ export default class BarChart extends Component {
 						checked={filter === 'month' && true}
 						onChange={handleDateFilter}
 					/>
-					{/*<RadioInput*/}
-						{/*id="quarter"*/}
-						{/*value="quarter"*/}
-						{/*name="dateFilter"*/}
-						{/*checked={filter === 'quarter' && true}*/}
-						{/*onChange={handleDateFilter}*/}
-					{/*/>*/}
+					{/* <RadioInput */}
+					{/* id="quarter" */}
+					{/* value="quarter" */}
+					{/* name="dateFilter" */}
+					{/* checked={filter === 'quarter' && true} */}
+					{/* onChange={handleDateFilter} */}
+					{/* /> */}
 				</div>
 				<Bar
 					data={data}

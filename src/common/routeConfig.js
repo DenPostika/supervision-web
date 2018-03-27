@@ -4,7 +4,6 @@ import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
 import authRoute from '../features/auth/route';
 import usersRoute from '../features/users/route';
-import userRoute from '../features/user/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -12,7 +11,6 @@ const childRoutes = [
 	homeRoute,
 	commonRoute,
 	usersRoute,
-	userRoute,
 	authRoute,
 ];
 
