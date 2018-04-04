@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Preloader from './Preloader';
+import Panel from './Panel';
 
 export default class StatusWidget extends Component {
 	static propTypes = {};
@@ -43,11 +45,17 @@ export default class StatusWidget extends Component {
 		));
 	};
 	render() {
-		const { usersList, trackingList } = this.props;
+		const { usersList, trackingList, pending } = this.props;
 		return (
-			<div className="common-status-widget box">
+			<Panel
+				header="status"
+				styleClass="purple-light"
+				customClass="common-status-widget"
+				pending={pending}
+				preloaderColor="#fff"
+			>
 				{this.renderUsers(usersList, trackingList)}
-			</div>
+			</Panel>
 		);
 	}
 }

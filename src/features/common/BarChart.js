@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Bar } from 'react-chartjs-2';
-import { getDateRange } from './utils/tracking';
+import { getDateRange } from './utils/daysRange';
 import RadioInput from './RadioInput';
 import DaysPickerRange from './DaysPickerRange';
 

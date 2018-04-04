@@ -1,0 +1,43 @@
+@import '../../styles/mixins';
+
+.common-panel {
+  margin: 10px 5px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  .panel_header{
+    text-transform: capitalize;
+    padding: 15px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    font-size: inherit;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    .common-preloader{
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    &.default{
+      color: #515253;
+      background-color: #edf1f2;
+      border-bottom: 0;
+    }
+    &.purple-light {
+      background-color: #9289ca;
+      color: #fff;
+    }
+  }
+  .panel_body{
+    padding: 15px;
+  }
+  &.no-padding{
+    .panel_body{
+      padding: 0;
+    }
+  }
+}

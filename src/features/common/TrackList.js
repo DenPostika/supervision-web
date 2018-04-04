@@ -5,6 +5,8 @@ import moment from 'moment';
 import { WORKDAY } from '../../configConst';
 
 import Button from '../common/Button';
+import Preloader from '../common/Preloader';
+import Panel from '../common/Panel';
 
 export default class TrackList extends Component {
 	static propTypes = {
@@ -77,14 +79,21 @@ export default class TrackList extends Component {
 			updateErr,
 			userType,
 			selectedUser,
+			pending,
 		} = this.props;
 		return (
-			<div className="common-track-list">
-				{userType === 'admin' &&
-					selectedUser !== null && (
-						<h5 className="title">{selectedUser}</h5>
-					)}
-				<div className="list_wrap box no-padding">
+			<Panel
+				header={
+					userType === 'admin' &&
+					selectedUser !== null &&
+					selectedUser
+				}
+				pending={pending}
+				preloaderColor="#fff"
+				styleClass="purple-light no-padding"
+				customClass="common-track-list"
+			>
+				<div className="list_wrap ">
 					<div className="list_head list_row">
 						<div className="date">date</div>
 						<div className="in">has come</div>
@@ -114,6 +123,7 @@ export default class TrackList extends Component {
 								<DatePicker
 									selected={checkInEnd}
 									onChange={handleEnd}
+									// onChangeRaw={handleEnd}
 									showTimeSelect
 									timeFormat="HH:mm"
 									timeIntervals={60}
@@ -150,7 +160,7 @@ export default class TrackList extends Component {
 						</div>
 					</div>
 				</div>
-			</div>
+			</Panel>
 		);
 	}
 }

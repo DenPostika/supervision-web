@@ -7,8 +7,14 @@
 // https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da.
 
 import initialState from './initialState';
+import { reducer as updateProfileReducer } from './updateProfile';
+import { reducer as fetchCalendarReducer } from './fetchCalendar';
+import { reducer as updateCalendarReducer } from './updateCalendar';
 
 const reducers = [
+  updateProfileReducer,
+  fetchCalendarReducer,
+  updateCalendarReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -15,7 +15,7 @@ const reducerMap = {
 	home: homeReducer,
 	common: commonReducer,
 	auth: authReducer,
-  users: usersReducer,
+  	users: usersReducer,
 };
 
 export default combineReducers(reducerMap);

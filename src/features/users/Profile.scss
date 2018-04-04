@@ -1,6 +1,26 @@
 @import '../../styles/mixins';
 
 .users-profile {
+  .btn_wrap{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  .profile_list{
+    .list_item{
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+      align-items: center;
+      .value{
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      .title{
+      }
+    }
+  }
   .edit_profile_wrap{
     max-width: 300px;
   }

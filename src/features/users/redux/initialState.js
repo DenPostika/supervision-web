@@ -6,6 +6,12 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
+  updateProfilePending: false,
+  updateProfileError: null,
+  fetchCalendarPending: false,
+  fetchCalendarError: null,
+  updateCalendarPending: false,
+  updateCalendarError: null,
 };
 
 export default initialState;

@@ -10,7 +10,7 @@ import Box from '../common/Box';
 import BarChart from '../common/BarChart';
 import TrackList from '../common/TrackList';
 import StatusWidget from '../common/StatusWidget';
-import { getEndDate, getStartDate } from '../common/utils/tracking';
+import { getEndDate, getStartDate } from '../common/utils/daysRange';
 
 export class Dashboard extends Component {
 	static propTypes = {
@@ -24,16 +24,13 @@ export class Dashboard extends Component {
 		updateErr: null,
 	};
 	componentDidMount() {
-		this.props.actions.fetchUserInfo();
+		// this.props.actions.fetchUserInfo();
 	}
 	componentWillReceiveProps() {
 		this.setState({
 			dateCome: null,
 			dateLeave: null,
 		});
-	}
-	componentWillUnmount() {
-		// this.setState({ cardId: null });
 	}
 	selectUser = e => {
 		const { range } = this.state;
@@ -163,6 +160,7 @@ export class Dashboard extends Component {
 									usersList={users}
 									trackingList={trackingList}
 									selectUser={this.selectUser}
+									pending={this.props.fetchUsersPending}
 								/>
 							) : null}
 							<BarChart
@@ -184,6 +182,7 @@ export class Dashboard extends Component {
 								userType={userInfo.type}
 								selectedUser={this.props.selectedUser}
 								userList={users}
+								pending={this.props.fetchTrackingListPending}
 							/>
 						</main>
 						{/* <footer className="box footer">footer</footer> */}
@@ -204,6 +203,8 @@ function mapStateToProps(state) {
 		users: state.home.users,
 		selectedUser: state.home.selectedUser,
 		selectedCardId: state.home.selectedCardId,
+		fetchTrackingListPending: state.home.fetchTrackingListPending,
+		fetchUsersPending: state.home.fetchUsersPending,
 	};
 }
 

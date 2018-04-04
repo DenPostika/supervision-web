@@ -9,7 +9,7 @@ import {
 	HOME_FETCH_TRACKING_LIST_DISMISS_ERROR,
 } from './constants';
 
-import { getEndDate, getStartDate } from '../../common/utils/tracking';
+import { getEndDate, getStartDate } from '../../common/utils/daysRange';
 
 export function fetchTrackingList(
 	cardId,

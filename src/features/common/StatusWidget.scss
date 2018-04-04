@@ -1,9 +1,11 @@
 @import '../../styles/mixins';
 
 .common-status-widget {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  .panel_body{
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+  }
   .userCard{
     border-radius: 5px;
     transition: background-color 0.2s ease-out;

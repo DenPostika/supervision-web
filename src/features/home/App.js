@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import '../../styles/web-fonts-with-css/scss/fontawesome.scss';
 import '../../styles/web-fonts-with-css/scss/fa-solid.scss';
 import '../../styles/web-fonts-with-css/scss/fa-brands.scss';
+import * as actions from './redux/actions';
+import { bindActionCreators } from 'redux';
 
 import { redirect } from '../common/redux/redirect';
 import Header from '../common/Header';
@@ -19,6 +21,7 @@ import { setAuthorizationToken } from '../../configDefaultAPI';
 class App extends Component {
 	static propTypes = {
 		children: PropTypes.node,
+		actions: PropTypes.object.isRequired,
 	};
 
 	static defaultProps = {
@@ -28,10 +31,12 @@ class App extends Component {
 		if (!checkAuth()) {
 			this.props.redirect('/auth/sign_in');
 		}
+		this.props.actions.fetchUserInfo();
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.location !== prevProps.location) {
 			setAuthorizationToken(localStorage.token);
+            this.props.actions.fetchUserInfo();
 		}
 	}
 	handleSignOut = e => {
@@ -48,7 +53,7 @@ class App extends Component {
 						userInfo={userInfo}
 						handleSignOut={this.handleSignOut}
 					/>,
-					<Sidebar key="sidebar" />,
+					<Sidebar key="sidebar" userInfo={this.props.userInfo} />,
 				]}
 				{this.props.children}
 			</div>
@@ -68,6 +73,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		redirect: path => redirect(path)(dispatch),
 		signOut: () => signOut()(dispatch),
+		actions: bindActionCreators({ ...actions }, dispatch),
 	};
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

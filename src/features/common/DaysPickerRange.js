@@ -71,7 +71,7 @@ export default class DaysPickerRange extends React.Component {
 				}}
 			>
 				<Button styleClass="small" onClick={this.toggleShow}>
-					{!from && !to && `select first day`}
+					{!from && !to && `select range of days`}
 					{from && !to && 'select last day'}
 					{from &&
 						to &&
