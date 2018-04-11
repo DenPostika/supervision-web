@@ -10,11 +10,13 @@ import initialState from './initialState';
 import { reducer as updateProfileReducer } from './updateProfile';
 import { reducer as fetchCalendarReducer } from './fetchCalendar';
 import { reducer as updateCalendarReducer } from './updateCalendar';
+import { reducer as setMarkerReducer } from './setMarker';
 
 const reducers = [
   updateProfileReducer,
   fetchCalendarReducer,
   updateCalendarReducer,
+  setMarkerReducer,
 ];
 
 export default function reducer(state = initialState, action) {

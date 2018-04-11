@@ -11,10 +11,17 @@
     label{
       padding: 3px 5px;
       display: block;
+      cursor: pointer;
+      & span {
+        padding: 0 3px;
+      }
+      & i {
+        margin: 0 3px;
+      }
     }
-    input:checked + label {
-      background: #57b955;
-      color: #fff;
-    }
+    //input:checked + label {
+    //  background: #57b955;
+    //  color: #fff;
+    //}
   }
 }

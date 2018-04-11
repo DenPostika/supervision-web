@@ -1,9 +1,28 @@
 @import '../../styles/mixins';
 
 .users-calendar {
-  .container{
+  .calendar_wrap{
     display: flex;
     flex-wrap: wrap;
+  }
+  .control_panel_wrap{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .markers_wrap{
+    display: inline-block;
+    .panel_body{
+      background: #d8d8d8;
+      display: flex;
+    }
+  }
+  .month_filter_wrap{
+    display: inline-block;
+    z-index: 11;
+    .common-circle-menur{
+      display: flex;
+      align-items: center;
+    }
   }
   .user_calendar_wrap{
     max-width: 446px;
@@ -31,6 +50,19 @@
         }
         &.holiday{
           background: #57b955;
+          color: #fff;
+        }
+        &.dayoff{
+          background: #55f;
+          color: #fff;
+        }
+        &.ill{
+          background: #f90;
+          color: #fff;
+        }
+        &.vacation{
+          background: aqua;
+          color: #000;
         }
         &:hover{
           background: #6CA6E0;

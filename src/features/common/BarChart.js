@@ -164,14 +164,14 @@ export default class BarChart extends Component {
 						id="week"
 						value="week"
 						name="dateFilter"
-						checked={filter === 'week' && true}
+						checked={filter}
 						onChange={handleDateFilter}
 					/>
 					<RadioInput
 						id="month"
 						value="month"
 						name="dateFilter"
-						checked={filter === 'month' && true}
+						checked={filter}
 						onChange={handleDateFilter}
 					/>
 					{/* <RadioInput */}

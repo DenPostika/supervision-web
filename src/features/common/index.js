@@ -11,3 +11,4 @@ export { default as PageNotFound } from './PageNotFound';
 export { default as DaysPickerRange } from './DaysPickerRange';
 export { default as Panel } from './Panel';
 export { default as Preloader } from './Preloader';
+export { default as CircleMenu } from './CircleMenu';
