@@ -21,9 +21,6 @@ export class Calendar extends Component {
 		users: PropTypes.object.isRequired,
 		actions: PropTypes.object.isRequired,
 	};
-	state = {
-		marker: 'dayoff',
-	};
 	componentDidUpdate(prevProps) {
 		const { userInfo } = this.props;
 		if (prevProps.userInfo !== userInfo) {
@@ -38,6 +35,24 @@ export class Calendar extends Component {
 			});
 		}
 	}
+	handleSetMonth = e => {
+		e.preventDefault();
+		const { userInfo } = this.props;
+		const value = e.target.value.split(',');
+		this.props.actions.setMonth(value);
+		if (checkUserType(userInfo, 'admin')) {
+			this.props.actions.fetchCalendar({
+				dateStart: value[0],
+				dateEnd: value[1],
+			});
+			return;
+		}
+		this.props.actions.fetchCalendar({
+			dateStart: value[0],
+			dateEnd: value[1],
+			userId: userInfo._id,
+		});
+	};
 	chooseMarker = e => {
 		e.preventDefault();
 		this.props.actions.setMarker(e.currentTarget.value);
@@ -59,37 +74,35 @@ export class Calendar extends Component {
 		}
 		this.props.actions.updateCalendar({ data, req });
 	};
-	selectDaysRange = (startDate, endDate) => {
-		const { userInfo } = this.props;
-		if (checkUserType(userInfo, 'admin')) {
-			this.props.actions.fetchCalendar({
-				dateStart: startDate,
-				dateEnd: endDate,
-			});
-			return;
-		}
-		this.props.actions.fetchCalendar({
-			dateStart: getStartDate('month'),
-			dateEnd: getEndDate('month'),
-			userId: userInfo._id,
-		});
-	};
-	resetDaysRange = () => {
-		const { userInfo } = this.props;
-		if (checkUserType(userInfo, 'admin')) {
-			this.props.actions.fetchCalendar(getStartEndDates());
-			return;
-		}
-		this.props.actions.fetchCalendar({
-			dateStart: getStartDate('month'),
-			dateEnd: getEndDate('month'),
-			userId: userInfo._id,
-		});
-	};
 	renderCalendar = (data, daysRange) => {
-		const { pending } = this.props;
+		const { pending, selectedMonth } = this.props;
 		const range = getDateRange(daysRange);
-		return data.map(user => {
+		const startWeek = moment(range[0], 'DD.MM.YYYY')
+			.weekday(0)
+			.format('YYYY-MM-DD');
+
+		const missingDaysOfFirstWeek = () => {
+			const input = getDateRange([
+				moment(startWeek).format('YYYY-MM-DD'),
+				moment(range[0], 'DD.MM.YYYY').format('YYYY-MM-DD'),
+			]);
+			return input.slice(0, input.length - 1);
+		};
+
+		const lastWeek = moment(range[range.length - 1], 'DD.MM.YYYY')
+			.weekday(7)
+			.format('YYYY-MM-DD');
+		const missingDaysOfLastWeek = () => {
+			const input = getDateRange([
+				moment(range[range.length - 1], 'DD.MM.YYYY').format(
+					'YYYY-MM-DD',
+				),
+				moment(lastWeek).format('YYYY-MM-DD'),
+			]);
+			return input.slice(1, input.length - 1);
+		};
+
+		return data.sort((a, b) => a.username > b.username).map(user => {
 			const freeDays = user.data.map(el =>
 				moment(el.date, 'YYYY-MM-DD').format('DD.MM.YYYY'),
 			);
@@ -101,15 +114,39 @@ export class Calendar extends Component {
 				}
 				return { day, status: null };
 			});
+			const dayLabels = () => {
+				const arrOfWeek = Array.from({ length: 7 }, (v, k) => k);
+				const res = arrOfWeek.map(el =>
+					moment()
+						.day(el)
+						.format('DDD'),
+				);
+				console.log(res);
+			};
+			const header = (
+				<div className="calendar-header">
+					{`${user.username} ${
+						selectedMonth === 'month'
+							? moment()
+								.format('MMM')
+								.toUpperCase()
+							: selectedMonth[2].toUpperCase()
+					}`}
+					{this.renderDaysPicker(user.userId)}
+				</div>
+			);
 			return (
 				<div key={user.userId} className="user_calendar_wrap">
 					<Panel
-						header={user.username}
+						header={header}
 						styleClass="purple-light no-padding"
 						preloaderColor="#fff"
 						pending={pending}
 					>
 						<div className="days_container">
+							{missingDaysOfFirstWeek().map(el => (
+								<div key={el} className="day notActive">{el}</div>
+							))}
 							{filledCalendar.map(el => (
 								<button
 									key={el.day}
@@ -123,6 +160,9 @@ export class Calendar extends Component {
 									{el.status === 'workday' ? '' : el.status}
 								</button>
 							))}
+							{missingDaysOfLastWeek().map(el => (
+								<div key={el} className="day notActive">{el}</div>
+							))}
 						</div>
 					</Panel>
 				</div>
@@ -132,7 +172,11 @@ export class Calendar extends Component {
 	renderMarkers = () => {
 		const { marker } = this.props;
 		return (
-			<Panel customClass="markers_wrap" header="markers">
+			<Panel
+				customClass="markers_wrap"
+				header="markers"
+				styleClass="no-padding default"
+			>
 				<RadioInput
 					name="marker"
 					value="holiday"
@@ -190,7 +234,7 @@ export class Calendar extends Component {
 			</Panel>
 		);
 	};
-	renderDaysPicker = () => {
+	renderDaysPicker = id => {
 		const arrOfMonth = Array.from({ length: 12 }, (v, k) => k);
 		const arrOfMenuItems = arrOfMonth.map(el => ({
 			dateStart: moment(moment().month(el))
@@ -202,31 +246,35 @@ export class Calendar extends Component {
 			label: moment(moment().month(el)).format('MMM'),
 		}));
 		return (
-			<Panel
-				header="select month"
-				customClass="month_filter_wrap no-padding"
-			>
-				<CircleMenu>
-					{arrOfMenuItems.map(el => (
-						<Button key={el.label}>{el.label}</Button>
-					))}
-				</CircleMenu>
-			</Panel>
+			// {/*<Panel*/}
+			// {/*header="select month"*/}
+			// {/*customClass="month_filter_wrap no-padding"*/}
+			// {/*>*/}
+			<CircleMenu id={id}>
+				{arrOfMenuItems.map(el => (
+					<Button
+						key={el.label}
+						onClick={this.handleSetMonth}
+						value={[el.dateStart, el.dateEnd, el.label]}
+					>
+						{el.label}
+					</Button>
+				))}
+			</CircleMenu>
+			// {/*</Panel>*/}
 		);
 	};
 	render() {
-		const { calendar = [], userInfo } = this.props;
+		const { calendar = [], userInfo, selectedMonth } = this.props;
 		return (
 			<div className="users-calendar">
 				<div className="container">
 					<div className="control_panel_wrap">
 						{checkUserType(userInfo, 'admin') &&
 							this.renderMarkers()}
-						{checkUserType(userInfo, 'admin') &&
-							this.renderDaysPicker()}
 					</div>
 					<div className="calendar_wrap">
-						{this.renderCalendar(calendar, 'month')}
+						{this.renderCalendar(calendar, selectedMonth)}
 					</div>
 				</div>
 			</div>
@@ -240,8 +288,11 @@ function mapStateToProps(state) {
 		users: state.users,
 		userInfo: state.home.userInfo,
 		calendar: state.users.calendar,
-		pending: state.users.fetchCalendarPending,
+		pending:
+			state.users.fetchCalendarPending ||
+			state.users.updateCalendarPending,
 		marker: state.users.marker,
+		selectedMonth: state.users.selectedMonth,
 	};
 }
 

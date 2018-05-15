@@ -4,17 +4,13 @@ import { expect } from 'chai';
 import { Calendar } from 'src/features/users/Calendar';
 
 describe('users/Calendar', () => {
-  it('renders node with correct class name', () => {
-    const props = {
-      users: {},
-      actions: {},
-    };
-    const renderedComponent = shallow(
-      <Calendar {...props} />
-    );
+	it('renders node with correct class name', () => {
+		const props = {
+			users: {},
+			actions: {},
+		};
+		const renderedComponent = shallow(<Calendar {...props} />);
 
-    expect(
-      renderedComponent.find('.users-calendar').getElement()
-    ).to.exist;
-  });
+		expect(renderedComponent.find('.users-calendar').getElement()).to.exist;
+	});
 });

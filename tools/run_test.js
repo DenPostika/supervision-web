@@ -34,7 +34,7 @@ const opts = {
 };
 
 const params = [
-  'mocha-webpack',
+  'mocha-webpack --require ignore-styles --require mock-local-storage',
   '--colors',
   '--include',
   'tests/before-all.js',

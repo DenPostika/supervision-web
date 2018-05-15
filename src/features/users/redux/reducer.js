@@ -11,12 +11,14 @@ import { reducer as updateProfileReducer } from './updateProfile';
 import { reducer as fetchCalendarReducer } from './fetchCalendar';
 import { reducer as updateCalendarReducer } from './updateCalendar';
 import { reducer as setMarkerReducer } from './setMarker';
+import { reducer as setMonthReducer } from './setMonth';
 
 const reducers = [
   updateProfileReducer,
   fetchCalendarReducer,
   updateCalendarReducer,
   setMarkerReducer,
+  setMonthReducer,
 ];
 
 export default function reducer(state = initialState, action) {

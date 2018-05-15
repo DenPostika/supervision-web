@@ -13,6 +13,7 @@ const initialState = {
 	updateCalendarPending: false,
 	updateCalendarError: null,
 	marker: 'dayoff',
+	selectedMonth: 'month',
 };
 
 export default initialState;

@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+// import '../../styles/datepicker/style.css';
 import Button from './Button';
 
 export default class DaysPickerRange extends React.Component {

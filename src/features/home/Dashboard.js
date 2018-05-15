@@ -161,6 +161,7 @@ export class Dashboard extends Component {
 									trackingList={trackingList}
 									selectUser={this.selectUser}
 									pending={this.props.fetchUsersPending}
+                                    selectedUser={this.props.selectedUser}
 								/>
 							) : null}
 							<BarChart

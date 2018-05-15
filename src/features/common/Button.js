@@ -5,6 +5,7 @@ export default class Button extends Component {
 	static propTypes = {
 		styleClass: PropTypes.string,
 		type: PropTypes.string,
+		value: PropTypes.node,
 		onlyIcon: PropTypes.bool,
 		children: PropTypes.node,
 		disabled: PropTypes.bool,
@@ -16,6 +17,7 @@ export default class Button extends Component {
 		onlyIcon: false,
 		children: 'click',
 		disabled: false,
+		value: null,
 		onClick: () => {},
 	};
 	render() {
@@ -26,6 +28,7 @@ export default class Button extends Component {
 			onClick,
 			disabled,
 			type,
+			value,
 		} = this.props;
 		return (
 			<button
@@ -35,6 +38,7 @@ export default class Button extends Component {
 				onClick={onClick}
 				type={type}
 				disabled={disabled}
+				value={value}
 			>
 				{children}
 			</button>

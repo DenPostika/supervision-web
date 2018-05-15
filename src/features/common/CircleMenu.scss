@@ -1,7 +1,7 @@
 @import '../../styles/mixins';
 
 $toggler-size: 40px;
-$toggler-color: #f90;
+$toggler-color: #fff;
 $toggler-transition: transform .5s, top .5s;
 
 $item-count: 12;
@@ -10,7 +10,7 @@ $item-color: #444;
 $item-transition: .5s;
 
 @mixin size ($width, $height: $width) {
-  width: $width + 5px;
+  width: $width;
   height: $height;
 }
 
@@ -47,7 +47,7 @@ $item-transition: .5s;
   .menu-toggler {
      //@include absolute-center;
     @include size($toggler-size);
-    //z-index: 21;
+    margin: 0;
     opacity: 0;
     cursor: pointer;
 

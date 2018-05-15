@@ -16,6 +16,7 @@ import {
 	doSignIn,
 	reducer,
 } from 'src/features/auth/redux/signIn';
+import request from '../../../../src/features/common/utils/request';
 
 describe('auth/redux/signIn', () => {
 	afterEach(() => {
@@ -37,9 +38,11 @@ describe('auth/redux/signIn', () => {
 	// saga tests
 	const generator = doSignIn();
 
-	it('calls delay when receives a begin action', () => {
+	it('calls begin action', () => {
 		// Delay is just a sample, this should be replaced by real sync request.
-		expect(generator.next().value).to.deep.equal(call(delay, 20));
+		expect(generator.next().value).to.deep.equal(
+			call(request, 'post', `/api/auth/login`, {}),
+		);
 	});
 
 	it('dispatches AUTH_SIGN_IN_SUCCESS action when succeeded', () => {

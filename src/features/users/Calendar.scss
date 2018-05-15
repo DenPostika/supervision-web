@@ -16,16 +16,29 @@
       display: flex;
     }
   }
-  .month_filter_wrap{
-    display: inline-block;
-    z-index: 11;
-    .common-circle-menur{
+  //.month_filter_wrap{
+  //  display: inline-block;
+  //  z-index: 11;
+  //  align-self: flex-end;
+  //}
+    .common-circle-menu{
       display: flex;
       align-items: center;
+      margin-left: auto;
+      //padding: 0 10px;
+      z-index: 21;
     }
-  }
   .user_calendar_wrap{
-    max-width: 446px;
+    max-width: 432px;
+    .panel_header{
+      padding: 0 15px;
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1;
+      }
+    }
     .days_container{
       display: flex;
       flex-wrap: wrap;
@@ -34,7 +47,7 @@
         width: 60px;
         height: 40px;
         font-size: 0.7em;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) inset;
+        //box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) inset;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -42,9 +55,15 @@
         text-align: center;
         border: none;
         background: #fff;
-        margin: 1px;
+        //margin: 1px;
         outline: 1px;
         transition: background-color 0.3s ease;
+        &.notActive{
+          opacity: 0.5;
+          &:hover{
+            cursor: not-allowed;
+          }
+        }
         &.weekend{
           background: #eee;
         }

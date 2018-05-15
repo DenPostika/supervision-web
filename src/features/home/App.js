@@ -35,8 +35,8 @@ class App extends Component {
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.location !== prevProps.location) {
-			setAuthorizationToken(localStorage.token);
-            this.props.actions.fetchUserInfo();
+			setAuthorizationToken(localStorage.getItem('token'));
+			this.props.actions.fetchUserInfo();
 		}
 	}
 	handleSignOut = e => {

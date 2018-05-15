@@ -4,8 +4,16 @@ import Panel from './Panel';
 
 export default class StatusWidget extends Component {
 	static propTypes = {};
-	renderUsers = (users = [], lists = []) => {
+	state = {
+		isHovered: false,
+	};
+	triggerUnderline = () => {
+		this.setState({ isHovered: !this.state.isHovered });
+	};
+	renderUsers = (users = []) => {
 		const exceptAdmin = users.filter(user => user.type !== 'admin');
+		const { selectedUser } = this.props;
+		const { isHovered } = this.state;
 		return exceptAdmin.map(user => (
 			<div key={user.cardId} className="userCard">
 				<button
@@ -41,6 +49,10 @@ export default class StatusWidget extends Component {
 						</span>
 					</div>
 				</div>
+				<div
+					className={`underline ${selectedUser === user.username &&
+						'active'}`}
+				/>
 			</div>
 		));
 	};

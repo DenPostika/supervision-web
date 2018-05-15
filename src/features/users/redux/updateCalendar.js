@@ -11,7 +11,6 @@ import request from '../../common/utils/request';
 
 export function updateCalendar(data) {
 	// If need to pass args to saga, pass it with the begin action.
-	console.log(data);
 	return {
 		type: USERS_UPDATE_CALENDAR_BEGIN,
 		payload: data,
@@ -27,9 +26,7 @@ export function dismissUpdateCalendarError() {
 // worker Saga: will be fired on USERS_UPDATE_CALENDAR_BEGIN actions
 export function* doUpdateCalendar(type, payload) {
 	// If necessary, use argument to receive the begin action with parameters.
-	console.log(payload);
 	const { data, req } = payload.payload;
-	console.log(data, req);
 	const { res, err } = yield call(request, req, '/api/calendar/', data);
 	if (err) {
 		return yield put({

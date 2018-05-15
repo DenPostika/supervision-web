@@ -63,7 +63,7 @@ export default class Root extends React.Component {
 	render() {
 		const children = renderRouteConfigV3(null, this.props.routeConfig, '/');
 		setDefaultAxios();
-		setAuthorizationToken(localStorage.token);
+		setAuthorizationToken(localStorage.getItem('token'));
 		return (
 			<Provider store={this.props.store}>
 				<ConnectedRouter history={history}>{children}</ConnectedRouter>

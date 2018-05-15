@@ -4,17 +4,13 @@ import { expect } from 'chai';
 import { SignIn } from 'src/features/auth/SignIn';
 
 describe('auth/SignIn', () => {
-  it('renders node with correct class name', () => {
-    const props = {
-      home: {},
-      actions: {},
-    };
-    const renderedComponent = shallow(
-      <SignIn {...props} />
-    );
+	it('renders node with correct class name', () => {
+		const props = {
+			home: {},
+			actions: {},
+		};
+		const renderedComponent = shallow(<SignIn {...props} />);
 
-    expect(
-      renderedComponent.find('.auth-sign-in').getElement()
-    ).to.exist;
-  });
+		expect(renderedComponent.find('.auth-sign-in').getElement()).to.exist;
+	});
 });

@@ -4,24 +4,21 @@ export default class CircleMenu extends Component {
 	static propTypes = {};
 	state = { isChecked: false };
 	handleChange = e => {
-		e.preventDefault();
-		console.log('check');
-		this.setState({ isChecked: !this.state.isChecked });
-		console.log(this.state.isChecked);
+		const { target } = e;
+		const { name } = target;
+		const value =
+			target.type === 'checkbox' ? target.checked : target.value;
+		this.setState({
+			[name]: value,
+		});
 	};
-
+	handleClose = () => {
+		this.setState({ isChecked: false });
+	};
 	render() {
-		const { children } = this.props;
-		const deg = 360 / React.Children.count(children);
-
+		const { children, id } = this.props;
 		const wrapChildren = React.Children.map(children, (child, i) => (
-			<li
-				className="menu-item"
-				// style={{
-				// 	transform: `rotate(${deg / 2 -
-				// 		deg * i}deg) translateY(-8em)`,
-				// }}
-			>
+			<li className="menu-item" onClick={this.handleClose}>
 				{child}
 			</li>
 		));
@@ -31,13 +28,13 @@ export default class CircleMenu extends Component {
 				<nav className="menu">
 					<input
 						type="checkbox"
-						id="menu-toggler"
+						id={id}
 						onChange={this.handleChange}
 						checked={this.state.isChecked}
-						className={`menu-toggler`}
-						name="menu-toggler"
+						className="menu-toggler"
+						name="isChecked"
 					/>
-					<label htmlFor="menu-toggler" />
+					<label htmlFor={id} />
 					<ul>{wrapChildren}</ul>
 				</nav>
 			</div>

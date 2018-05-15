@@ -10,6 +10,7 @@ export class Auth extends Component {
 	static propTypes = {
 		auth: PropTypes.object.isRequired,
 		actions: PropTypes.object.isRequired,
+		lacation: PropTypes.object,
 		children: PropTypes.node,
 	};
 
@@ -18,14 +19,10 @@ export class Auth extends Component {
 	};
 
 	render() {
-		const { location } = this.props;
+		const { location = {} } = this.props;
 		return (
-			<div className="auth-auth">
-				<Box
-					currentKey={location.pathname}
-				>
-					{this.props.children}
-				</Box>
+			<div className="auth-main">
+				<Box currentKey={location.pathname}>{this.props.children}</Box>
 			</div>
 		);
 	}
